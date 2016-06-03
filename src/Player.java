@@ -1,5 +1,4 @@
 import java.awt.Point;
-import java.util.Vector;
 
 public class Player extends Block {
 
