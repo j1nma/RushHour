@@ -9,6 +9,10 @@ public class Board implements Direction {
 	private final Set<Block> blocks;
 	private Map<Point, Block> map;
 	private Player redCar;
+	
+	/**
+	 * CONSTRUCTOR BOARD
+	 */
 
 	public Board(int size, int exit, Set<Block> blocks) {
 		// El tamaño del tablero no puede ser menor a 2, ya que el auto mide 2
@@ -22,29 +26,81 @@ public class Board implements Direction {
 		this.map = new HashMap<Point, Block>();
 	}
 
+	/**
+	 * METODOS PARA VER SI UNA POSICION ESTA OCUPADA
+	 */
+
+
 	private boolean isOccupied(Point position) {
 		return map.get(position) != null;
 	}
 
-	private void moveBlock(Block block, Point position) {
-		Integer length = block.getLength();
-		Integer orientation = block.getOrientation();
+	private boolean isOccupied(int x, int y){
+		Point position= new Point(x,y);
+		return isOccupied(position);
+	}
 
-		if (position.x < 0 || position.y < 0) {
+	/**
+	 * METODO PARA MOVER UN BLOQUE( SE MUEVE DE A UNA POSICION PARA ADELANTE O PARA ATRAS)
+	 */
+
+	private void moveBlock(Block block, int direction) {
+		Point position = new Point();
+
+		if (direction != FORWARD && direction != BACKWARD ) {
 			throw new IllegalArgumentException();
-		} else if (orientation == VERTICAL && position.y + length >= size) {
-			// throw new IllegalArgumentException();
-		} else if (orientation == HORIZONTAL && position.x + length >= size) {
-			// throw new IllegalArgumentException();
 		}
-
+		position = nextPosition(block, direction);
 		eraseBlock(block);
 		block.setPosition(position);
 		placeBlock(block, position);
 	}
+	
+	/**
+	 * METODO PARA VERIFICAR SI  EL MOVIMIENTO ES VALIDO O SE CONSERVA LA POSICION ACTUAL
+	 */
 
-	// Posiblemente se puede cambiar para recibir length y orientation en la
-	// llamada)
+	private Point nextPosition(Block block, int direction){
+		Point nextPosition = new Point();
+		double y = block.getPosition().getY();
+		double x = block.getPosition().getX();
+		
+		if (direction == FORWARD){
+			if (block.getOrientation() == VERTICAL ) {
+				if (y+1+block.getLength() < size && isOccupied((int)x,(int)y+1)){
+						nextPosition.setLocation(x, y+1);
+				} else {
+					nextPosition=position;
+				}
+			} else {
+			    if (x+1+block.getLength() < size && isOccupied((int)x+1,(int)y)){
+					nextPosition.setLocation(x+1, y);
+				} else {
+					nextPosition=position;
+				}
+			}
+		} else {
+			if (block.getOrientation() == VERTICAL ) {
+				if (y-1 < size && isOccupied((int)x,(int)y-1)){
+						nextPosition.setLocation(x, y-1);
+				} else {
+					nextPosition=position;
+				}
+			} else {
+				if (x-1 < size && isOccupied((int)x-1,(int)y)){
+					nextPosition.setLocation(x-1, y);
+				} else {
+					nextPosition=position;
+				}
+			}
+		}
+		return nextPosition;
+	}
+	
+	/**
+	 * METODO PARA ACTUALIZAR LA POSICION DEL BLOQUE
+	 */ 
+	 
 	private void placeBlock(Block block, Point position) {
 		Integer length = block.getLength();
 		Integer orientation = block.getOrientation();
@@ -58,9 +114,10 @@ public class Board implements Direction {
 		}
 	}
 
-	// TODO: Ver si se puede sacar el ciclo y ponerlo en una funcion separada
-	// para no repetir codigo(posibles cambios para que ambas sean la misma
-	// funcion
+	/**
+	 * METODO PARA BORRAR LA POSICION ANTERIOR DEL BLOQUE (Tenemos que hacer una sola funcion para placeBlock y eraseBlock)
+	 */
+
 	private void eraseBlock(Block block) {
 		Point position = block.getPosition();
 		Point current = new Point(position.x, position.y);
@@ -76,6 +133,10 @@ public class Board implements Direction {
 			}
 		}
 	}
+	
+	/**
+	 * METODO PARA AGREGAR UN NUEVO BLOQUE AL TABLERO
+	 */
 
 	private void addBlock(Point position, int length, int orientation) {
 		if (length > size || length < 1) {
@@ -103,7 +164,7 @@ public class Board implements Direction {
 		// al hacer el move)
 		while (counter-- > 0) {
 			if (isOccupied(current)) {
-				// TODO: Buscar una excepcion como la gente;
+				throw new RuntimeException(); // TODO: Buscar una excepcion como la gente;
 			}
 			if (orientation == VERTICAL) {
 				current.move(current.x, ++current.y);
@@ -115,9 +176,6 @@ public class Board implements Direction {
 		Block block = new Block(position, length, orientation);
 		blocks.add(block);
 		placeBlock(block, position);
-
-		// TODO: Agregar getters de estado si son necesarios.
-
 	}
 
 }
