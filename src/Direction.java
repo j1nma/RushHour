@@ -1,5 +1,8 @@
 
 public interface Direction {
-	public static final int VERTICAL = 0;
-	public static final int HORIZONTAL = 1;
+	int VERTICAL = 0;
+	int HORIZONTAL = 1;
+
+	int FORWARD = 2;
+	int BACKWARD = 3;
 }
