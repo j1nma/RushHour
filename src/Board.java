@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Board implements Direction,Movement {
+public class Board implements Direction {
 	private int size;
 	private int exit;
 
