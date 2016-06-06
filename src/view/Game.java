@@ -1,3 +1,4 @@
+package view;
 import java.io.InputStream;
 
 import java.nio.file.Files;
@@ -14,9 +15,12 @@ import javafx.stage.Stage;
 /**
  * Game sets the primary stage: loads the background image and creates
  * a menu manager.
- * @author JuanmaAlonso
+ * 
+ * @author Juan M. Alonso, Emiliano Vazquez
  *
  */
+
+// GAME PODRIA NO ESTAR EN VIEW?
 public class Game extends Application {
 	private MenuManager gameMenu;
 
@@ -26,6 +30,7 @@ public class Game extends Application {
 		Pane root = new Pane();
 		root.setPrefSize(280, 280);
 
+		//TODO HACERLO FUNCIONAR SIN ESTE INPUTSTREAM
 		InputStream is = Files.newInputStream(Paths.get("res/images/rh_background.jpg"));
 		Image img = new Image(is);
 		is.close();

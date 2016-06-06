@@ -1,3 +1,5 @@
+package view;
+
 import java.util.ArrayList;
 import javafx.scene.image.ImageView;
 

@@ -1,42 +1,32 @@
+package view;
 
-import javafx.scene.effect.GaussianBlur;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.Button;
+import javafx.scene.text.Font;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
-public class MenuButton extends StackPane {
-	private Text text;
+//RETOQUES GRAFICOS
+public class MenuButton extends Button {
 
-	public MenuButton(String name, Paint color) {
-		text = new Text(name);
-		text.getFont();
-		text.setFont(Font.font(20));
-		text.setFill(color);
+	public MenuButton(String text, Paint color) {
+		super(text);
+		this.setFont(Font.font(20));
+		this.setTextFill(color);
+		this.setStyle("-fx-base: black;-fx-focus-color: transparent;");
+		this.setOpacity(0.6);
 
-		Rectangle buttonBackground = new Rectangle(175, 30);
-		buttonBackground.setOpacity(0.6);
-		buttonBackground.setFill(Color.BLACK);
-		buttonBackground.setEffect(new GaussianBlur(3.5));
-		buttonBackground.setArcWidth(20);
-		buttonBackground.setArcHeight(20);
-		
-		getChildren().addAll(buttonBackground, text);
-
-		setOnMouseEntered(event -> {
-			buttonBackground.setFill(Color.WHITE);
-			text.setFill(Color.BLACK);
+		this.setOnMouseEntered(e -> {
+			this.setStyle("-fx-base: white;-fx-focus-color: transparent;");
+			this.setTextFill(Color.BLACK);
 		});
 
-		setOnMouseExited(event -> {
-			buttonBackground.setFill(Color.BLACK);
-			text.setFill(color);
+		this.setOnMouseExited(e -> {
+			this.setStyle("-fx-base: black;-fx-focus-color: transparent;");
+			this.setTextFill(color);
 		});
 	}
 
-	public MenuButton(String name) {
-		this(name, Color.WHITE);
+	public MenuButton(String text) {
+		this(text, Color.WHITE);
 	}
 }

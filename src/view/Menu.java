@@ -1,24 +1,20 @@
-
+package view;
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
+import javafx.scene.Node;
 
 /**
  * Menu creates a vertical box of commands or options.
- * @author JuanmaAlonso
+ * 
+ * @authors Juan M. Alonso, Emiliano Vazquez
  *
  */
-public class Menu {
-	private VBox menu;
+public class Menu extends VBox {
 
-	//TODO 280 ES MAGIC NUMBER??
-	public Menu() {
-		this.menu = new VBox(10);
-		this.menu.setAlignment(Pos.CENTER);
-		this.menu.setPrefWidth(280);
-		this.menu.setPrefHeight(280);
-	}
-
-	public VBox getMenu() {
-		return menu;
+	public Menu(Node... children) {
+		super(10, children);
+		this.setAlignment(Pos.CENTER);
+		this.setPrefWidth(280);
+		this.setPrefHeight(280);
 	}
 }

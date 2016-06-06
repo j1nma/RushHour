@@ -1,3 +1,5 @@
+package view;
+import Player;
 import javafx.scene.image.ImageView;
 
 public class RedCarView extends ObjectView<Player> {
