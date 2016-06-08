@@ -1,3 +1,4 @@
+package model;
 
 public interface Direction {
 	int VERTICAL = 0;

@@ -1,21 +1,23 @@
 package view;
-import Player;
 import javafx.scene.image.ImageView;
+import model.Player;
 
 public class RedCarView extends ObjectView<Player> {
-  ImageView frontPart;
-  ImageView rearPart;
+    ImageView frontPart;
+    ImageView rearPart;
 
-  public RedCarView() {
-    frontPart = new ImageView("res/image/RedCarFrontPart.png");
-    rearPart = new ImageView("res/image/RedCarRearPart.png");
+    //TODO: arreglar todo esto (No deberia ser un null, ustedes fijense como arreglarlo, me choca mucho el uso de generics en todo esto.)
+    public RedCarView() {
+        super(null);
+        frontPart = new ImageView("res/image/RedCarFrontPart.png");
+        rearPart = new ImageView("res/image/RedCarRearPart.png");
   }
 
-  public ImageView getRedCarFrontPart() {
+    public ImageView getRedCarFrontPart() {
     return frontPart;
   }
 
-  public ImageView getRedCarRearPart() {
+    public ImageView getRedCarRearPart() {
     return rearPart;
   }
 }

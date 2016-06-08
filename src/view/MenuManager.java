@@ -18,6 +18,17 @@ public class MenuManager extends StackPane {
 		InstructionsMenu instructionsMenu = new InstructionsMenu();
 		LevelsMenu levelsMenu = new LevelsMenu();
 
+        /*
+        * 07/06/16
+        * Comentario de Edu:
+        *
+        * Deberian considerar mover todos los settings de aca abajo a MainMenu, PlayMenu, LevelsMenu, etc. Para reducir
+        * el clutter en el codigo. Queda un poco chocante que esten todos estos settings aca a mi parecer.
+        *
+        * Es probable que esto tal vez pueda llegar a terminar siendo de controller, tambien, considerando que lidia con
+        * listeners de eventos.
+        * */
+
 		mainMenu.getPlayButton().setOnMouseClicked(event -> {
 			this.getChildren().clear();
 			this.getChildren().add(playMenu);

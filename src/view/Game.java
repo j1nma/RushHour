@@ -30,7 +30,7 @@ public class Game extends Application {
 		Pane root = new Pane();
 		root.setPrefSize(280, 280);
 
-		//TODO HACERLO FUNCIONAR SIN ESTE INPUTSTREAM
+		//TODO: HACERLO FUNCIONAR SIN ESTE INPUTSTREAM
 		InputStream is = Files.newInputStream(Paths.get("res/images/rh_background.jpg"));
 		Image img = new Image(is);
 		is.close();
@@ -53,6 +53,6 @@ public class Game extends Application {
 	}
 
 	public static void main(String[] args) {
-		Application.launch(args);
+		launch(args);
 	}
 }

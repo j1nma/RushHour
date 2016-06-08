@@ -1,6 +1,5 @@
 package view;
-
-import RushHour.src.Block
+import model.Block;
 
 public abstract class ObjectView <T extends Block> {
   protected T objectView;

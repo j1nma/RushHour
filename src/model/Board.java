@@ -1,10 +1,13 @@
+package model;
+
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Board implements Direction {
+public class Board implements Direction, Serializable {
 	private int size;
 	private int exit;
 

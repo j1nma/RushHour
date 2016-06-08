@@ -1,3 +1,5 @@
+package model;
+
 import java.awt.Point;
 
 public class Player extends Block {
