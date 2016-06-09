@@ -1,54 +1,42 @@
 package view;
-import java.io.InputStream;
-
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import controller.GameStateManager;
 import controller.states.MainMenuState;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.effect.GaussianBlur;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
- * Game sets the primary stage: loads the background image and creates
- * a menu manager.
+ * Game sets the primary stage: loads the background image and creates a menu
+ * manager.
  * 
  * @author Juan M. Alonso, Emiliano Vazquez
  *
  */
 
 // GAME PODRIA NO ESTAR EN VIEW?
-public class Game extends Application {
+public class Game extends Application implements ViewConstants {
 	private GameStateManager gsm;
+	private ScreenManager screenManager;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-		Pane root = new Pane();
-		root.setPrefSize(280, 280);
-
-		//TODO: HACERLO FUNCIONAR SIN ESTE INPUTSTREAM
-		InputStream is = Files.newInputStream(Paths.get("res/images/rh_background.jpg"));
-		Image img = new Image(is);
-		is.close();
-
-		ImageView imgView = new ImageView(img);
-		imgView.setEffect(new GaussianBlur(5));
+		screenManager = new ScreenManager("res/images/rh_background.jpg");
 
 		gsm = new GameStateManager();
 		gsm.push(new MainMenuState(gsm));
 
-		root.getChildren().addAll(imgView, gsm);
+		// CUANDO ESTE BIEN IMPLEMENTADO SERA
+		// screenManager.getRootPane().getChildren().addAll(screenManager.getImageView());
+		screenManager.getRootPane().getChildren().addAll(screenManager.getImageView(), gsm);
 
-		Scene scene = new Scene(root);
+		Scene scene = new Scene(screenManager.getRootPane());
 
+		// CUANDO ESTE BIEN IMPLEMENTADO SERA
+		// screenManager.setVisible(true);
 		gsm.setVisible(true);
-		
+
 		primaryStage.setTitle("RushHour");
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);

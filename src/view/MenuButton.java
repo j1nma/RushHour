@@ -5,23 +5,22 @@ import javafx.scene.text.Font;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-//RETOQUES GRAFICOS
-public class MenuButton extends Button {
+public class MenuButton extends Button implements ViewConstants {
 
 	public MenuButton(String text, Paint color) {
 		super(text);
-		this.setFont(Font.font(20));
+		this.setFont(Font.font(FONT_SIZE));
 		this.setTextFill(color);
-		this.setStyle("-fx-base: black;-fx-focus-color: transparent;");
-		this.setOpacity(0.6);
+		this.setStyle(BUTTON_STYLE_0);
+		this.setOpacity(BUTTON_OPACITY);
 
 		this.setOnMouseEntered(e -> {
-			this.setStyle("-fx-base: white;-fx-focus-color: transparent;");
+			this.setStyle(BUTTON_STYLE_1);
 			this.setTextFill(Color.BLACK);
 		});
 
 		this.setOnMouseExited(e -> {
-			this.setStyle("-fx-base: black;-fx-focus-color: transparent;");
+			this.setStyle(BUTTON_STYLE_0);
 			this.setTextFill(color);
 		});
 	}
