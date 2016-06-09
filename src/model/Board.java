@@ -168,7 +168,7 @@ public class Board implements Direction, Serializable {
 		Integer counter = length;
 
 		// Chequeo de si todo el espacio a donde va a estar el bloque este vacio
-		// Posiblemente puede ser una funcion. (El controler puede necesitarlo
+		// Posiblemente puede ser una funcion. (El controller puede necesitarlo
 		// al hacer el move)
 		while (counter-- > 0) {
 			//Si la posicion esta ocupada, tirar una exception

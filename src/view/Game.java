@@ -4,6 +4,8 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import controller.GameStateManager;
+import controller.states.MainMenuState;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.effect.GaussianBlur;
@@ -22,7 +24,7 @@ import javafx.stage.Stage;
 
 // GAME PODRIA NO ESTAR EN VIEW?
 public class Game extends Application {
-	private MenuManager gameMenu;
+	private GameStateManager gsm;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -38,13 +40,14 @@ public class Game extends Application {
 		ImageView imgView = new ImageView(img);
 		imgView.setEffect(new GaussianBlur(5));
 
-		gameMenu = new MenuManager();
+		gsm = new GameStateManager();
+		gsm.push(new MainMenuState(gsm));
 
-		root.getChildren().addAll(imgView, gameMenu);
+		root.getChildren().addAll(imgView, gsm);
 
 		Scene scene = new Scene(root);
 
-		gameMenu.setVisible(true);
+		gsm.setVisible(true);
 		
 		primaryStage.setTitle("RushHour");
 		primaryStage.setScene(scene);
