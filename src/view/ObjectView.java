@@ -1,12 +1,12 @@
 package view;
 
-import model.Block;
+import model.Direction;
 
-public abstract class ObjectView<T extends Block> {
-	protected T objectView;
+public abstract class ObjectView<T> implements ViewConstants, Direction {
+	protected T object;
 
-	public ObjectView(T objectView) {
-		this.objectView = objectView;
+	public ObjectView(T object) {
+		this.object = object;
 	}
 
 }

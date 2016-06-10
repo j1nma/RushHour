@@ -3,8 +3,12 @@ package view.panes;
 import javafx.scene.paint.Color;
 import view.MenuButton;
 
+<<<<<<< HEAD:src/view/panes/DifficultyMenuPane.java
 import java.io.IOError;
 import java.io.IOException;
+=======
+import view.MenuButton;
+>>>>>>> Grid:src/view/panes/DifficultyMenuPane.java
 
 public class DifficultyMenuPane extends GameMenu {
 	private MenuButton btnBack;
@@ -20,7 +24,7 @@ public class DifficultyMenuPane extends GameMenu {
 		btnHard = new MenuButton("Hard", Color.ORANGE);
 		btnExpert = new MenuButton("Expert", Color.RED);
 
-		this.getChildren().addAll(btnEasy, btnMedium, btnHard, btnExpert, btnBack);
+		list.getChildren().addAll(btnEasy, btnMedium, btnHard, btnExpert, btnBack);
 	}
 
 	public boolean isEasyPressed() {

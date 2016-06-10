@@ -14,7 +14,7 @@ public class MainMenuPane extends GameMenu {
 		btnInstructions = new MenuButton("Instructions");
 		btnExit = new MenuButton("Exit");
 
-		this.getChildren().addAll(btnPlay, btnLoad, btnInstructions, btnExit);
+		list.getChildren().addAll(btnPlay, btnLoad, btnInstructions, btnExit);
 	}
 
 	public boolean isPlayPressed() {

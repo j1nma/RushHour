@@ -1,32 +1,60 @@
 package view;
 
 import java.util.ArrayList;
+
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import model.Block;
+import model.Player;
 
-// Falta hacer la imagen de los bloques
 public class BlockView extends ObjectView<Block> {
-	ArrayList<ImageView> view;
+	ArrayList<ImageView> images;
 
-	// ImageView, ImageView,ImageView,
-	public BlockView(Block block, String front, String middle, String rear) {
-        //super(null);
-    	super(block);
-        
-        int length = block.getLength();
-        //int length = this.objectView.getLength();
+	public BlockView(Block block) {
+		super(block);
 
-        view.add(new ImageView(front)); // Imagen del frente del auto
+		images = new ArrayList<ImageView>(block.getLength());
 
-        // El for agrega la cantidad de partes del medio necesarias
-        for(int i = 1; i < length - 1; i++) {
-        	view.add(new ImageView(middle));
-        }
-        
-        view.add(new ImageView(rear));
-    }
+		setImages(block, CAR_REAR_IMAGE_PATH, CAR_MIDDLE_IMAGE_PATH, CAR_FRONT_IMAGE_PATH);
 
-	public ArrayList<ImageView> getBlockView() {
-		return this.view;
 	}
+
+	public BlockView(Player redCar) {
+		super(redCar);
+
+		images = new ArrayList<ImageView>(redCar.getLength());
+
+		setImages(redCar, PLAYER_REAR_IMAGE_PATH, PLAYER_MIDDLE_IMAGE_PATH, PLAYER_FRONT_IMAGE_PATH);
+
+	}
+
+	private void setImages(Block block, String frontPath, String middlePath, String rearPath) {
+		int length = block.getLength();
+		int orientation = block.getOrientation();
+
+		if (length >= 2) {
+			images.add(new ImageView(new Image(frontPath)));
+
+			if (length > 2) {
+				for (int i = 1; i < length - 1; i++) {
+					images.add(new ImageView(new Image(middlePath)));
+				}
+			}
+
+		}
+
+		images.add(new ImageView(new Image(rearPath)));
+
+		if (orientation == VERTICAL) {
+			for (ImageView imageView : images)
+				imageView.setRotate(IMAGE_ROTATION);
+		}
+	}
+
+	public ArrayList<ImageView> getBlockViewImages() {
+		return this.images;
+	}
+	
+	//set on action
+
 }
