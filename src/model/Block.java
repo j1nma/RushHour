@@ -2,7 +2,7 @@ package model;
 
 import java.awt.Point;
 
-public class Block implements Direction {
+public class Block extends Entity implements Direction {
 	private int orientation;
 	private int length;
 	private Point position;

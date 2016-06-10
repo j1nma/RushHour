@@ -1,10 +1,5 @@
 package view;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,16 +10,12 @@ public class ScreenManager extends StackPane implements ViewConstants {
 	private ImageView imageView;
 	private Pane root;
 
-	public ScreenManager(String imgPath) throws IOException {
+	public ScreenManager(String imagePath) {
 
 		root = new Pane();
 		root.setPrefSize(BACKGROUND_SIZE, BACKGROUND_SIZE);
 
-		InputStream is = Files.newInputStream(Paths.get(imgPath));
-		Image img = new Image(is);
-		is.close();
-
-		imageView = new ImageView(img);
+		imageView = new ImageView(new Image(imagePath));
 		imageView.setEffect(new GaussianBlur(GAUSSIAN_BLUR));
 
 	}
@@ -40,5 +31,10 @@ public class ScreenManager extends StackPane implements ViewConstants {
 	public void setScene(GameScene scene) {
 		this.getChildren().clear();
 		this.getChildren().addAll(imageView, scene);
+	}
+	
+	public void setScene1(GameScene scene) {
+		this.getChildren().clear();
+		this.getChildren().addAll(scene);
 	}
 }
