@@ -1,22 +1,24 @@
-package view;
+package view.panes;
 
 import javafx.scene.paint.Color;
 
-public class DifficultyMenuScene extends GameScene {
+import view.MenuButton;
+
+public class DifficultyMenuPane extends GameMenu {
 	private MenuButton btnBack;
 	private MenuButton btnEasy;
 	private MenuButton btnMedium;
 	private MenuButton btnHard;
 	private MenuButton btnExpert;
 
-	public DifficultyMenuScene() {
+	public DifficultyMenuPane(){
 		btnBack = new MenuButton("Back");
 		btnEasy = new MenuButton("Easy", Color.GREEN);
 		btnMedium = new MenuButton("Medium", Color.YELLOW);
 		btnHard = new MenuButton("Hard", Color.ORANGE);
 		btnExpert = new MenuButton("Expert", Color.RED);
 
-		this.getChildren().addAll(btnEasy, btnMedium, btnHard, btnExpert, btnBack);
+		list.getChildren().addAll(btnEasy, btnMedium, btnHard, btnExpert, btnBack);
 	}
 
 	public boolean isEasyPressed() {

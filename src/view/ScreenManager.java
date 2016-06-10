@@ -1,40 +1,29 @@
 package view;
 
-import javafx.scene.effect.GaussianBlur;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
-public class ScreenManager extends StackPane implements ViewConstants {
-	private ImageView imageView;
-	private Pane root;
+public class ScreenManager implements ViewConstants {
 
-	public ScreenManager(String imagePath) {
+    private Stage stage;
+	private StackPane root;
+	private Scene scene;
 
-		root = new Pane();
-		root.setPrefSize(BACKGROUND_SIZE, BACKGROUND_SIZE);
+	public ScreenManager(Stage primaryStage, String name) {		
+		root = new StackPane();
+		scene = new Scene(root);
+        stage = primaryStage;
+        stage.setTitle(name);
+        stage.setResizable(false);
+		stage.setScene(scene);
 
-		imageView = new ImageView(new Image(imagePath));
-		imageView.setEffect(new GaussianBlur(GAUSSIAN_BLUR));
-
+		root.setVisible(true);
 	}
 
-	public ImageView getImageView() {
-		return this.imageView;
-	}
-
-	public Pane getRootPane() {
-		return this.root;
-	}
-
-	public void setScene(GameScene scene) {
-		this.getChildren().clear();
-		this.getChildren().addAll(imageView, scene);
-	}
-	
-	public void setScene1(GameScene scene) {
-		this.getChildren().clear();
-		this.getChildren().addAll(scene);
+	public void setPane(Pane pane) {
+		root.getChildren().clear();
+		root.getChildren().add(pane);
 	}
 }

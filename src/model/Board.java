@@ -1,13 +1,14 @@
 package model;
 
 import java.awt.Point;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Board extends Entity implements Direction, Serializable {
+public class Board implements Direction, Serializable {
 	private int size;
 	private int exit;
 
@@ -95,7 +96,6 @@ public class Board extends Entity implements Direction, Serializable {
 				}
 			}
 		} else {
-			System.out.println("Entrado en el primer else");
 			if (block.getOrientation() == VERTICAL) {
 				if (y - 1 >= 0 && !isOccupied(x, y - 1)) {
 					nextPosition.setLocation(x, y - 1);

@@ -36,15 +36,16 @@ public class BoardView extends ObjectView<Board> implements Direction {
 	}
 
 	public void refresh(Board board) {
-		
+
 		BlockView blockview;
-		
+
 		for (Block block : board.getBlocksSet()) {
-			if(block instanceof Player){
-				blockview = new RedCarView((Player)block);
+			if (block instanceof Player) {
+				blockview = new RedCarView((Player) block);
 			} else {
 				blockview = new BlockView(block);
 			}
+			
 			int x = (int) block.getPosition().getX();
 			int y = (int) block.getPosition().getY();
 

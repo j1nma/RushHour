@@ -2,11 +2,12 @@ package controller.states;
 
 import controller.handlers.Handler;
 import controller.GameStateManager;
+import javafx.scene.layout.Pane;
 import view.GameScene;
 
 /*
     Comentario: puede ser que las clases xState sean redundantes,
-    posiblemente reemplazar todas por un simple agregado del handelr al constructor
+    posiblemente reemplazar todas por un simple agregado del handler al constructor
     sea una mejor implementacion.
  */
 
@@ -14,7 +15,7 @@ import view.GameScene;
 public abstract class State {
     protected GameStateManager gsm;
     protected Handler handler;
-    protected GameScene scene;
+    protected Pane pane;
 
     public State(GameStateManager gsm){
         this.gsm = gsm;
@@ -28,8 +29,8 @@ public abstract class State {
         handler.stop();
     }
 
-    public GameScene getScene(){
-        return scene;
+    public Pane getPane(){
+        return pane;
     }
 
 

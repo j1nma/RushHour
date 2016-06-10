@@ -4,31 +4,29 @@ import controller.GameStateManager;
 import controller.states.InstructionsMenuState;
 import controller.states.PlayMenuState;
 import controller.states.State;
-import view.MainMenuScene;
+import view.GameScene;
+import view.panes.MainMenuPane;
 
-public class MainMenuHandler extends Handler{
-
-    private MainMenuScene scene;
+public class MainMenuHandler extends Handler<MainMenuPane>{
 
     public MainMenuHandler(GameStateManager gsm, State state) {
         super(gsm,state);
-        scene = (MainMenuScene) state.getScene();
     }
 
     @Override
     public void handle(long now) {
-        if(scene.isPlayPressed()){
+        if(pane.isPlayPressed()){
             gsm.push(new PlayMenuState(gsm));
         }
 
-        if(scene.isLoadPressed()){
-            System.out.println("Load");
+        if(pane.isLoadPressed()){
+//            gsm.push(new TestState(gsm,));
         }
 
-        if(scene.isInstructionsPressed()){
+        if(pane.isInstructionsPressed()){
             gsm.push(new InstructionsMenuState(gsm));
         }
-        if(scene.isExitPressed()){
+        if(pane.isExitPressed()){
             System.exit(0);
         }
 

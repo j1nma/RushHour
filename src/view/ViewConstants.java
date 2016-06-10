@@ -2,7 +2,9 @@ package view;
 
 public interface ViewConstants {
 	public static final int BACKGROUND_SIZE = 560;
-	public static final int GAUSSIAN_BLUR = 10;
+	public static final int BACKGROUND_GAUSSIAN_BLUR = 10;
+	public static final String BACKGROUND_PATH = "res/images/background.jpg";
+	
 	public static final int FONT_SIZE = 30;
 	public static final int NODE_SEPARATION = 10;
 
