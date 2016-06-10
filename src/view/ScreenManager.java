@@ -5,40 +5,37 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import javafx.scene.Scene;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import view.panes.GameMenu;
 
-public class ScreenManager extends StackPane implements ViewConstants {
-	private ImageView imageView;
-	private Pane root;
+public class ScreenManager implements ViewConstants {
 
-	public ScreenManager(String imgPath) throws IOException {
+    //Esto va a ir en assets.
+	private ImageView menuImage;
 
-		root = new Pane();
-		root.setPrefSize(BACKGROUND_SIZE, BACKGROUND_SIZE);
+    private Stage stage;
+	private StackPane root;
+	private Scene scene;
 
-		InputStream is = Files.newInputStream(Paths.get(imgPath));
-		Image img = new Image(is);
-		is.close();
+	public ScreenManager(Stage primaryStage, String name) {
+		root = new StackPane();
+		scene = new Scene(root);
+        stage = primaryStage;
+        stage.setTitle(name);
+        stage.setResizable(false);
+		stage.setScene(scene);
 
-		imageView = new ImageView(img);
-		imageView.setEffect(new GaussianBlur(GAUSSIAN_BLUR));
-
+		root.setVisible(true);
 	}
 
-	public ImageView getImageView() {
-		return this.imageView;
-	}
-
-	public Pane getRootPane() {
-		return this.root;
-	}
-
-	public void setScene(GameScene scene) {
-		this.getChildren().clear();
-		this.getChildren().addAll(imageView, scene);
+	public void setPane(Pane pane) {
+		root.getChildren().clear();
+		root.getChildren().add(pane);
 	}
 }

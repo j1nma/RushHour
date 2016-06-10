@@ -2,13 +2,18 @@ package controller.states;
 
 import controller.handlers.MainMenuHandler;
 import controller.GameStateManager;
-import view.MainMenuScene;
+import view.panes.MainMenuPane;
 
 public class MainMenuState extends State{
 
     public MainMenuState(GameStateManager gsm) {
         super(gsm);
-        scene = new MainMenuScene();
+        pane = new MainMenuPane();
         handler = new MainMenuHandler(gsm,this);
+    }
+
+    public void entered(){
+        super.entered();
+        System.out.println("ENTRADO");
     }
 }

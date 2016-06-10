@@ -1,15 +1,19 @@
 package controller;
 import controller.states.State;
 import javafx.scene.layout.StackPane;
+import view.ScreenManager;
 
 import java.util.Stack;
 
 public class GameStateManager extends StackPane{
 
-    private Stack<State> states;
 
-    public GameStateManager(){
+    private Stack<State> states;
+    private ScreenManager screenManager;
+
+    public GameStateManager(ScreenManager screenManager){
         states = new Stack<State>();
+        this.screenManager = screenManager;
     }
 
     public void push(State state){
@@ -17,18 +21,16 @@ public class GameStateManager extends StackPane{
             states.peek().leaving();
         }
         states.push(state);
-        this.getChildren().clear();
-        this.getChildren().add(state.getScene());
         state.entered();
+        screenManager.setPane(state.getPane());
     }
 
     public State pop(){
         State state = states.pop();
         state.leaving();
-        this.getChildren().clear();
-        this.getChildren().add(states.peek().getScene());
         if(!states.isEmpty()) {
             states.peek().entered();
+            screenManager.setPane(states.peek().getPane());
         }
         return state;
     }

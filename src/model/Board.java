@@ -94,7 +94,6 @@ public class Board implements Direction, Serializable {
 				}
 			}
 		} else {
-			System.out.println("Entrado en el primer else");
 			if (block.getOrientation() == VERTICAL ) {
 				if (y-1 >= 0 && !isOccupied(x,y-1)){
 					nextPosition.setLocation(x, y-1);

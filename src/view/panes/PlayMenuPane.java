@@ -1,10 +1,15 @@
-package view;
-public class PlayMenuScene extends GameScene {
+package view.panes;
+
+import view.MenuButton;
+
+import java.io.IOException;
+
+public class PlayMenuPane extends GameMenu {
 	private MenuButton btnBack;
 	private MenuButton btnSinglePlayer;
 	private MenuButton btnTwoPlayers;
 
-	public PlayMenuScene() {
+	public PlayMenuPane() {
 		btnSinglePlayer = new MenuButton("Single Player");
 		btnTwoPlayers = new MenuButton("Two Players");
 		btnBack = new MenuButton("Back");

@@ -1,9 +1,11 @@
-package view;
+package view.panes;
 
-public class InstructionsMenuScene extends GameScene {
+import view.MenuButton;
+
+public class InstructionsMenuPane extends GameMenu {
 	private MenuButton btnBack;
 
-	public InstructionsMenuScene() {
+	public InstructionsMenuPane() {
 		btnBack = new MenuButton("Back");
 		
 		this.getChildren().add(btnBack);

@@ -1,6 +1,6 @@
 package view;
 
-//import javafx.scene.image.ImageView;
+//import javafx.pane.image.ImageView;
 //import model.Block;
 import model.Player;
 

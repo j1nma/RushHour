@@ -2,32 +2,29 @@ package controller.handlers;
 
 import controller.GameStateManager;
 import controller.states.State;
-import view.DifficultyMenuScene;
+import view.panes.DifficultyMenuPane;
 
-public class DifficultyMenuHandler extends Handler{
-
-    private DifficultyMenuScene scene;
+public class DifficultyMenuHandler extends Handler<DifficultyMenuPane>{
 
     public DifficultyMenuHandler(GameStateManager gsm, State state) {
         super(gsm, state);
-        scene = (DifficultyMenuScene) state.getScene();
     }
 
     @Override
     public void handle(long now) {
-        if(scene.isEasyPressed()){
+        if(pane.isEasyPressed()){
             System.out.println("Easy");
         }
-        if(scene.isMediumPressed()){
+        if(pane.isMediumPressed()){
             System.out.println("Medium");
         }
-        if(scene.isHardPressed()){
+        if(pane.isHardPressed()){
             System.out.println("Hard");
         }
-        if(scene.isExpertPressed()){
+        if(pane.isExpertPressed()){
             System.out.println("Expert");
         }
-        if(scene.isBackPressed()){
+        if(pane.isBackPressed()){
             gsm.pop();
         }
     }

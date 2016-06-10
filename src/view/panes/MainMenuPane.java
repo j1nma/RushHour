@@ -1,12 +1,14 @@
-package view;
+package view.panes;
 
-public class MainMenuScene extends GameScene {
+import view.MenuButton;
+
+public class MainMenuPane extends GameMenu {
 	private MenuButton btnPlay;
     private MenuButton btnLoad;
     private MenuButton btnInstructions;
     private MenuButton btnExit;
 
-    public MainMenuScene() {
+    public MainMenuPane() {
 		btnPlay = new MenuButton("Play");
 		btnLoad = new MenuButton("Load");
 		btnInstructions = new MenuButton("Instructions");

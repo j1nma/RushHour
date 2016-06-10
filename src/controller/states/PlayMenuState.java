@@ -2,13 +2,22 @@ package controller.states;
 
 import controller.handlers.PlayMenuHandler;
 import controller.GameStateManager;
-import view.PlayMenuScene;
+import view.GameScene;
+import view.panes.PlayMenuPane;
 
 public class PlayMenuState extends State{
 
     public PlayMenuState(GameStateManager gsm){
         super(gsm);
-        scene = new PlayMenuScene();
+        pane = new PlayMenuPane();
         handler = new PlayMenuHandler(gsm, this);
+    }
+
+    public void entered(){
+        super.entered();
+    }
+
+    public void leaving(){
+        super.leaving();
     }
 }

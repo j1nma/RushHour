@@ -2,12 +2,13 @@ package controller.states;
 
 import controller.GameStateManager;
 import controller.handlers.InstructionsMenuHandler;
-import view.InstructionsMenuScene;
+import view.GameScene;
+import view.panes.InstructionsMenuPane;
 
 public class InstructionsMenuState extends State{
     public InstructionsMenuState(GameStateManager gsm) {
         super(gsm);
-        scene = new InstructionsMenuScene();
+        pane = new InstructionsMenuPane();
         handler = new InstructionsMenuHandler(gsm,this);
     }
 }

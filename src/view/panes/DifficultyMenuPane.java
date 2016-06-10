@@ -1,15 +1,19 @@
-package view;
+package view.panes;
 
 import javafx.scene.paint.Color;
+import view.MenuButton;
 
-public class DifficultyMenuScene extends GameScene {
+import java.io.IOError;
+import java.io.IOException;
+
+public class DifficultyMenuPane extends GameMenu {
 	private MenuButton btnBack;
 	private MenuButton btnEasy;
 	private MenuButton btnMedium;
 	private MenuButton btnHard;
 	private MenuButton btnExpert;
 
-	public DifficultyMenuScene() {
+	public DifficultyMenuPane(){
 		btnBack = new MenuButton("Back");
 		btnEasy = new MenuButton("Easy", Color.GREEN);
 		btnMedium = new MenuButton("Medium", Color.YELLOW);
