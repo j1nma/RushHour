@@ -194,23 +194,8 @@ public class Board implements Direction, Serializable {
 		Integer x = position.x;
 		Integer y = position.y;
 		Integer counter = length;
-
-		// Chequeo de si todo el espacio a donde va a estar el bloque este vacio
-		// Posiblemente puede ser una funcion. (El controller puede necesitarlo
-		// al hacer el move)
-		while (counter-- > 0) {
-			// Si la posicion esta ocupada, tirar una exception
-			if (isOccupied(x, y)) {
-				// TODO: Buscar una excepcion como la gente;
-				throw new IllegalArgumentException();
-			}
-			if (orientation == VERTICAL) {
-				y++;
-			} else {
-				x++;
-			}
-		}
-
+		
+		VerifyAdd(length,x,y,orientation);
 		Block block = new Block(position, length, orientation);
 		blocks.add(block);
 		placeBlock(block, position);
@@ -234,24 +219,16 @@ public class Board implements Direction, Serializable {
 		if (length > size || length < 1) {
 			throw new IllegalArgumentException();
 		}
-		if (position.x < 0 || position.x >= size || position.y != exit || position.x + length > size) {
+		if (position.x < 0 || position.x >= size || position.y != exit.y || position.x + length > size) {
 			throw new IllegalArgumentException();
 		}
 
 		Integer x = position.x;
+		Integer y = position.y;
 		Integer counter = length;
-
-		// Chequeo de si todo el espacio a donde va a estar el bloque este vacio
-		// Posiblemente puede ser una funcion. (El controller puede necesitarlo
-		// al hacer el move)
-		while (counter-- > 0) {
-			// Si la posicion esta ocupada, tirar una exception
-			if (isOccupied(x++, position.y)) {
-				// TODO: Buscar una excepcion como la gente;
-				throw new IllegalArgumentException();
-			}
-		}
-
+		
+		verifyAdd(length,x,y,HORIZONTAL);
+	
 		Player player = new Player(position, length);
 		blocks.add(player);
 		placeBlock(player, position);
@@ -268,8 +245,19 @@ public class Board implements Direction, Serializable {
 		return this.blocks;
 	}
 
+	public void verifyAdd(int counter, int x, int y, int orientation){
+		while (counter-- > 0) {
+			if (isOccupied(x, y)) {
+				throw new IlegalArgumentException();
+			}
+			if (orientation == VERTICAL) {
+				y++;
+			} else {
+				x++;
+			}
+		}
+	}
 }
-
 // TODO: Ver que hacer con el RedCar y la implementacion en AddBlock.
 // TODO: Ver si se puede sacar el loop while(counter( y ponerlo en una funcion
 // separada
