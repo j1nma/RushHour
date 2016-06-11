@@ -17,7 +17,7 @@ import java.util.Set;
  */
 public class Board implements Direction, Serializable {
 	private final int size;
-	private final int exit;
+	private final Point exit = new Point();
 
 	private Set<Block> blocks;
 	private Map<Point, Block> map;
@@ -39,7 +39,7 @@ public class Board implements Direction, Serializable {
 			throw new IllegalArgumentException();
 		}
 		this.size = size;
-		this.exit = exit;
+		this.exit.setLocation(size-1,exit);
 		this.blocks = new HashSet<Block>();
 		this.map = new HashMap<Point, Block>();
 
