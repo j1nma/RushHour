@@ -8,30 +8,14 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Board class represents the physical board of the game. It has a fixed size
- * and exit, where the Player car should slide across to win. It also contains a
- * set of blocks and a map of blocks with their position as keys to store all of
- * the vehicles of the game. Board can move any of its blocks, add one or add a
- * Player block.
- */
-public class Board implements Direction, Serializable {
-	private final int size;
-	private final Point exit = new Point();
+public class Board implements ModelConstants, Serializable {
+	private int size;
+	private int exit;
 
 	private Set<Block> blocks;
 	private Map<Point, Block> map;
 	private Player redCar;
 
-	/**
-	 * Board constructor. Validates parameters and initializes the set and map
-	 * of blocks, the latter with Point position with null value.
-	 * 
-	 * @param size
-	 *            the size of the board (size by size)
-	 * @param exit
-	 *            the row of the board that has the exit at the right end
-	 */
 	public Board(int size, int exit) {
 		// El tamaño del tablero no puede ser menor a 2, ya que el auto mide 2
 		// posiciones de largo
@@ -39,7 +23,7 @@ public class Board implements Direction, Serializable {
 			throw new IllegalArgumentException();
 		}
 		this.size = size;
-		this.exit.setLocation(size-1,exit);
+		this.exit = exit;
 		this.blocks = new HashSet<Block>();
 		this.map = new HashMap<Point, Block>();
 
@@ -161,18 +145,6 @@ public class Board implements Direction, Serializable {
 		}
 	}
 
-	/**
-	 * Validates parameters, verifying that no other blocks occupy the places
-	 * the block being added is intended to occupy. Adds block to the set and
-	 * map.
-	 * 
-	 * @param position
-	 *            the position that refers to the block
-	 * @param length
-	 *            the length of the block
-	 * @param orientation
-	 *            the orientation of the block
-	 */
 	public void addBlock(final Point position, int length, int orientation) {
 		// Chequeo de parametros
 		if (length > size || length < 1) {
@@ -194,60 +166,15 @@ public class Board implements Direction, Serializable {
 		Integer x = position.x;
 		Integer y = position.y;
 		Integer counter = length;
-		
-		verifyAdd(length,x,y,orientation);
-		Block block = new Block(position, length, orientation);
-		blocks.add(block);
-		placeBlock(block, position);
 
-		// TODO: Agregar getters de estado si son necesarios.
-
-	}
-
-	/**
-	 * Similar to addBlock, but a Player's orientation is always HORIZONTAL and
-	 * its position on the y axis always equal to Board's exit.
-	 * 
-	 * @param position
-	 *            the position that refers to the block
-	 * @param length
-	 *            the length of the block
-	 * @see addBlock
-	 */
-	public void addPlayer(final Point position, int length) {
-		// Chequeo de parametros
-		if (length > size || length < 1) {
-			throw new IllegalArgumentException();
-		}
-		if (position.x < 0 || position.x >= size || position.y != exit.y || position.x + length > size) {
-			throw new IllegalArgumentException();
-		}
-
-		Integer x = position.x;
-		Integer y = position.y;
-		Integer counter = length;
-		
-		verifyAdd(length,x,y,HORIZONTAL);
-		Player player = new Player(position, length);
-		blocks.add(player);
-		placeBlock(player, position);
-		redCar = player;
-	}
-
-	// BoardView lo usa
-	public int getSize() {
-		return this.size;
-	}
-
-	// BoardView lo usa
-	public Set<Block> getBlocksSet() {
-		return this.blocks;
-	}
-
-	public void verifyAdd(int counter, int x, int y, int orientation){
+		// Chequeo de si todo el espacio a donde va a estar el bloque este vacio
+		// Posiblemente puede ser una funcion. (El controller puede necesitarlo
+		// al hacer el move)
 		while (counter-- > 0) {
+			// Si la posicion esta ocupada, tirar una exception
 			if (isOccupied(x, y)) {
-				throw new IlegalArgumentException();
+				// TODO: Buscar una excepcion como la gente;
+				throw new IllegalArgumentException();
 			}
 			if (orientation == VERTICAL) {
 				y++;
@@ -255,14 +182,73 @@ public class Board implements Direction, Serializable {
 				x++;
 			}
 		}
+
+		Block block = new Block(position, length, orientation);
+		blocks.add(block);
+		placeBlock(block, position);
+
+		// TODO: Agregar getters de estado si son necesarios.
+
 	}
+	
+	public void addPlayer(final Point position, int length, int orientation) {
+		// Chequeo de parametros
+				if (length > size || length < 1) {
+					throw new IllegalArgumentException();
+				}
+				if (position.x < 0 || position.y < 0 || position.x >= size || position.y >= size) {
+					throw new IllegalArgumentException();
+				}
+				if (orientation == HORIZONTAL) {
+					if (position.x + length > size) {
+						throw new IllegalArgumentException();
+					}
+				} else {
+					if (position.y + length > size) {
+						throw new IllegalArgumentException();
+					}
+				}
+
+				Integer x = position.x;
+				Integer y = position.y;
+				Integer counter = length;
+
+				// Chequeo de si todo el espacio a donde va a estar el bloque este vacio
+				// Posiblemente puede ser una funcion. (El controller puede necesitarlo
+				// al hacer el move)
+				while (counter-- > 0) {
+					// Si la posicion esta ocupada, tirar una exception
+					if (isOccupied(x, y)) {
+						// TODO: Buscar una excepcion como la gente;
+						throw new IllegalArgumentException();
+					}
+					if (orientation == VERTICAL) {
+						y++;
+					} else {
+						x++;
+					}
+				}
+
+				Player player = new Player(position, length, orientation);
+				blocks.add(player);
+				placeBlock(player, position);
+				redCar = player;
+	}
+
+	public Player getRedCar(){
+		return redCar;
+	}
+
+	// BoardView lo usa
+	public int getSize() {
+		return this.size;
+	}
+	
+	// BoardView lo usa
+	public Set<Block> getBlocksSet() {
+		return this.blocks;
+	}
+
 }
 // TODO: Ver que hacer con el RedCar y la implementacion en AddBlock.
-// TODO: Ver si se puede sacar el loop while(counter( y ponerlo en una funcion
-// separada
-// para no repetir codigo(posibles cambios para que ambas sean la misma
-// funcion
-// 3. Junio
-// Ya no es final debido a una inconsistencia de diseno
-// El metodo de addblock tiene que poder agregar los bloques al set, sin embargo
-// el set es final.
+
