@@ -195,7 +195,7 @@ public class Board implements Direction, Serializable {
 		Integer y = position.y;
 		Integer counter = length;
 		
-		VerifyAdd(length,x,y,orientation);
+		verifyAdd(length,x,y,orientation);
 		Block block = new Block(position, length, orientation);
 		blocks.add(block);
 		placeBlock(block, position);
@@ -228,7 +228,6 @@ public class Board implements Direction, Serializable {
 		Integer counter = length;
 		
 		verifyAdd(length,x,y,HORIZONTAL);
-	
 		Player player = new Player(position, length);
 		blocks.add(player);
 		placeBlock(player, position);
