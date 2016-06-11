@@ -1,14 +1,8 @@
 package view.panes;
 
 import javafx.scene.paint.Color;
-import view.MenuButton;
 
-<<<<<<< HEAD:src/view/panes/DifficultyMenuPane.java
-import java.io.IOError;
-import java.io.IOException;
-=======
 import view.MenuButton;
->>>>>>> Grid:src/view/panes/DifficultyMenuPane.java
 
 public class DifficultyMenuPane extends GameMenu {
 	private MenuButton btnBack;

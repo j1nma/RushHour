@@ -13,7 +13,6 @@ public class InstructionsMenuHandler extends Handler<InstructionsMenuPane>{
     @Override
     public void handle(long now) {
         if(pane.isBackPressed()){
-            System.out.println("BACK PRESSED");
             gsm.pop();
         }
     }

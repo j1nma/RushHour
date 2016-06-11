@@ -14,6 +14,5 @@ public class MainMenuState extends State{
 
     public void entered(){
         super.entered();
-        System.out.println("ENTRADO");
     }
 }

@@ -2,8 +2,6 @@ package view.panes;
 
 import view.MenuButton;
 
-import java.io.IOException;
-
 public class PlayMenuPane extends GameMenu {
 	private MenuButton btnBack;
 	private MenuButton btnSinglePlayer;
@@ -14,7 +12,7 @@ public class PlayMenuPane extends GameMenu {
 		btnTwoPlayers = new MenuButton("Two Players");
 		btnBack = new MenuButton("Back");
 		
-		this.getChildren().addAll(btnSinglePlayer, btnTwoPlayers, btnBack);
+		list.getChildren().addAll(btnSinglePlayer, btnTwoPlayers, btnBack);
 	}
 
 	public boolean isSinglePlayerPressed() {

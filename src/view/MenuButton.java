@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import view.ViewConstants;
 
 public class MenuButton extends Button implements ViewConstants {
 

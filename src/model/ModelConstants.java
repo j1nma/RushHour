@@ -1,6 +1,6 @@
 package model;
 
-public interface Direction {
+public interface ModelConstants {
 	int VERTICAL = 0;
 	int HORIZONTAL = 1;
 

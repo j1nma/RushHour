@@ -7,10 +7,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import model.Block;
 import model.Board;
-import model.Direction;
+import model.ModelConstants;
 import model.Player;
 
-public class BoardView extends ObjectView<Board> implements Direction {
+public class BoardView extends ObjectView<Board> implements ModelConstants {
 	private GridPane grid;
 
 	public BoardView(Board board) {
@@ -33,27 +33,31 @@ public class BoardView extends ObjectView<Board> implements Direction {
 			grid.getRowConstraints().add(rowConst);
 		}
 
+		refresh();
+
 	}
 
-	public void refresh(Board board) {
+	public void refresh() {
 
 		BlockView blockview;
 
-		for (Block block : board.getBlocksSet()) {
-			if (block instanceof Player) {
+		grid.getChildren().clear();
+
+		for (Block block : object.getBlocksSet()) {
+			if (block == object.getRedCar()) {
 				blockview = new RedCarView((Player) block);
 			} else {
 				blockview = new BlockView(block);
 			}
 			
-			int x = (int) block.getPosition().getX();
-			int y = (int) block.getPosition().getY();
+			int x = block.getPosition().x;
+			int y = block.getPosition().y;
 
 			for (ImageView image : blockview.getBlockViewImages()) {
 				image.setFitHeight(BLOCKVIEW_HEIGHT); // TODO: podria ir en BlockView??
 				image.setFitWidth(BLOCKVIEW_WIDTH);
 
-				this.grid.add(image, x, y);
+				grid.add(image, x, y);
 				if (block.getOrientation() == HORIZONTAL) {
 					x++;
 				} else {

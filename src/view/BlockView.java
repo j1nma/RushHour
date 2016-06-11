@@ -1,14 +1,14 @@
 package view;
 
 import java.util.ArrayList;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import model.Block;
+import model.ModelConstants;
 import model.Player;
 
-public class BlockView extends ObjectView<Block> {
-	ArrayList<ImageView> images;
+public class BlockView extends ObjectView<Block> implements ModelConstants {
+	private ArrayList<ImageView> images;
 
 	public BlockView(Block block) {
 		super(block);

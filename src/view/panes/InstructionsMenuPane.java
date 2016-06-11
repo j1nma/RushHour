@@ -8,7 +8,7 @@ public class InstructionsMenuPane extends GameMenu {
 	public InstructionsMenuPane() {
 		btnBack = new MenuButton("Back");
 		
-		this.getChildren().add(btnBack);
+		list.getChildren().add(btnBack);
 	}
 
 	public boolean isBackPressed() {
