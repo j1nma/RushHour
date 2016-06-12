@@ -8,6 +8,13 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Board class represents the physical board of the game. It has a fixed size
+ * and exit, where the Player car should slide across to win. It also contains a
+ * set of blocks and a map of blocks with their position as keys to store all of
+ * the vehicles of the game. Board can move any of its blocks, add one or add a
+ * Player block.
+ */
 public class Board implements ModelConstants, Serializable {
 	private int size;
 	private int exit;
@@ -15,7 +22,15 @@ public class Board implements ModelConstants, Serializable {
 	private Set<Block> blocks;
 	private Map<Point, Block> map;
 	private Player redCar;
-
+	/**
+	 * Board constructor. Validates parameters and initializes the set and map
+	 * of blocks, the latter with Point position with null value.
+	 *
+	 * @param size
+	 *            the size of the board (size by size)
+	 * @param exit
+	 *            the row of the board that has the exit at the right end
+	 */
 	public Board(int size, int exit) {
 		// El tamaño del tablero no puede ser menor a 2, ya que el auto mide 2
 		// posiciones de largo
@@ -145,6 +160,19 @@ public class Board implements ModelConstants, Serializable {
 		}
 	}
 
+	/**
+	 * Validates parameters, verifying that no other blocks occupy the places
+	 * the block being added is intended to occupy. Adds block to the set and
+	 * map.
+	 *
+	 * @param position
+	 *            the position that refers to the block
+	 * @param length
+	 *            the length of the block
+	 * @param orientation
+	 *            the orientation of the block
+	 */
+
 	public void addBlock(final Point position, int length, int orientation) {
 		// Chequeo de parametros
 		if (length > size || length < 1) {
@@ -190,49 +218,45 @@ public class Board implements ModelConstants, Serializable {
 		// TODO: Agregar getters de estado si son necesarios.
 
 	}
-	
-	public void addPlayer(final Point position, int length, int orientation) {
+
+	/**
+	 * Similar to addBlock, but a Player's orientation is always HORIZONTAL and
+	 * its position on the y axis always equal to Board's exit.
+	 *
+	 * @param position
+	 *            the position that refers to the block
+	 * @param length
+	 *            the length of the block
+	 * @see #addBlock
+	 */
+	public void addPlayer(final int x, int length, int orientation) {
 		// Chequeo de parametros
-				if (length > size || length < 1) {
-					throw new IllegalArgumentException();
-				}
-				if (position.x < 0 || position.y < 0 || position.x >= size || position.y >= size) {
-					throw new IllegalArgumentException();
-				}
-				if (orientation == HORIZONTAL) {
-					if (position.x + length > size) {
-						throw new IllegalArgumentException();
-					}
-				} else {
-					if (position.y + length > size) {
-						throw new IllegalArgumentException();
-					}
-				}
+		if (length > size || length < 1) {
+			throw new IllegalArgumentException();
+		}
+		if (x < 0 || x + length > size) {
+			throw new IllegalArgumentException();
+		}
+		Integer counter = length;
+		Integer currX = x;
 
-				Integer x = position.x;
-				Integer y = position.y;
-				Integer counter = length;
+		// Chequeo de si todo el espacio a donde va a estar el bloque este vacio
+		// Posiblemente puede ser una funcion. (El controller puede necesitarlo
+		// al hacer el move)
+		while (counter-- > 0) {
+			// Si la posicion esta ocupada, tirar una exception
+			if (isOccupied(currX, exit)) {
+				// TODO: Buscar una excepcion como la gente;
+				throw new IllegalArgumentException();
+			}
+			currX++;
+		}
 
-				// Chequeo de si todo el espacio a donde va a estar el bloque este vacio
-				// Posiblemente puede ser una funcion. (El controller puede necesitarlo
-				// al hacer el move)
-				while (counter-- > 0) {
-					// Si la posicion esta ocupada, tirar una exception
-					if (isOccupied(x, y)) {
-						// TODO: Buscar una excepcion como la gente;
-						throw new IllegalArgumentException();
-					}
-					if (orientation == VERTICAL) {
-						y++;
-					} else {
-						x++;
-					}
-				}
-
-				Player player = new Player(position, length, orientation);
-				blocks.add(player);
-				placeBlock(player, position);
-				redCar = player;
+		Point blockPos = new Point(x,exit);
+		Player player = new Player(blockPos, length, orientation);
+		blocks.add(player);
+		placeBlock(player, blockPos);
+		redCar = player;
 	}
 
 	public Player getRedCar(){

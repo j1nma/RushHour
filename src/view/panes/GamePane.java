@@ -13,22 +13,22 @@ public class GamePane extends BorderPane{
     private BoardView boardView;
     private MenuButton backButton;
     private Set<String> input;
+    private BoardPane grid;
 
     public GamePane(Board board){
         backButton = new MenuButton("Back");
         boardView = new BoardView(board);
-        this.setCenter(boardView.getGrid());
+        grid = boardView.getGrid();
+        this.setCenter(grid);
         this.setTop(backButton);
 
         input = new HashSet<String>();
-
         this.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent e) {
                 String code = e.getCode().toString();
                 input.add(code);
             }
         });
-
         this.setOnKeyReleased(new EventHandler<KeyEvent>(){
             public void handle(KeyEvent e){
                 String code = e.getCode().toString();
@@ -43,6 +43,14 @@ public class GamePane extends BorderPane{
 
     public boolean isKeyPressed(String key){
         return input.contains(key);
+    }
+
+    public boolean isMousePressedOnGrid(){
+        return grid.isMousePressed();
+    }
+
+    public BoardPane getGrid(){
+        return grid;
     }
 
     public void refresh(){

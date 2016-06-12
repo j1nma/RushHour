@@ -21,7 +21,7 @@ public class BoardViewTest extends Application implements ModelConstants, ViewCo
 		board.addBlock(new Point(0, 5), 4, HORIZONTAL);
 		board.addBlock(new Point(3, 3), 1, HORIZONTAL);
 		board.addBlock(new Point(5, 0), 3, VERTICAL);
- 		board.addPlayer(new Point(2, 2), 2, HORIZONTAL);
+ 		board.addPlayer(2, 2, HORIZONTAL);
 
 		BoardView boardview = new BoardView(board);
 

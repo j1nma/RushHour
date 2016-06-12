@@ -19,10 +19,10 @@ public class GameState extends State implements ModelConstants{
         board.addBlock(new Point(0, 0), 2, HORIZONTAL);
         board.addBlock(new Point(0, 1), 2, HORIZONTAL);
         board.addBlock(new Point(0, 4), 3, HORIZONTAL);
-        board.addBlock(new Point(0, 5), 4, HORIZONTAL);
+//        board.addBlock(new Point(0, 5), 4, HORIZONTAL);
         board.addBlock(new Point(3, 3), 1, HORIZONTAL);
-        board.addBlock(new Point(5, 0), 3, VERTICAL);
-        board.addPlayer(new Point(2, 2), 2, HORIZONTAL);
+        board.addBlock(new Point(4, 0), 2, VERTICAL);
+        board.addPlayer(2, 2, HORIZONTAL);
         pane = new GamePane(board);
 
         handler = new GameHandler(gsm, this, board);
