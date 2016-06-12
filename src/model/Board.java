@@ -22,6 +22,7 @@ public class Board implements ModelConstants, Serializable {
 	private Set<Block> blocks;
 	private Map<Point, Block> map;
 	private Player redCar;
+
 	/**
 	 * Board constructor. Validates parameters and initializes the set and map
 	 * of blocks, the latter with Point position with null value.
@@ -29,12 +30,14 @@ public class Board implements ModelConstants, Serializable {
 	 * @param size
 	 *            the size of the board (size by size)
 	 * @param exit
-	 *            the row of the board that has the exit at the right end
+	 *            the row of the board that has the exit at the right end; from
+	 *            0 to size-1
 	 */
 	public Board(int size, int exit) {
 		// El tamaño del tablero no puede ser menor a 2, ya que el auto mide 2
 		// posiciones de largo
-		if (size < 2 || exit < 0 || exit > size) {
+		// Size must belong to [0,size-1]
+		if (size < 2 || exit < 0 || exit >= size) {
 			throw new IllegalArgumentException();
 		}
 		this.size = size;
@@ -45,24 +48,32 @@ public class Board implements ModelConstants, Serializable {
 		// Inicializacion de la grilla del tablero.
 		for (int x = 0; x < size; x++) {
 			for (int y = 0; y < size; y++) {
-				Point position = new Point(x, y);
-				map.put(position, null);
+				map.put(new Point(x, y), null);
 			}
 		}
 	}
 
-	public boolean isOccupied(Point position) {
-		return map.get(position) != null;
+	public boolean isOccupied(int x, int y) {
+		return map.get(new Point(x, y)) != null;
 	}
 
-	public boolean isOccupied(int x, int y) {
-		Point position = new Point(x, y);
-		return isOccupied(position);
+	public boolean isOccupied(Point position, int length, int orientation) {
+		Point auxPosition = new Point(position.x, position.y);
+
+		while (length-- > 0) {
+			if (map.get(auxPosition) != null) {
+				return true;
+			} else if (orientation == VERTICAL) {
+				auxPosition.y++;
+			} else {
+				auxPosition.x++;
+			}
+		}
+		return false;
 	}
 
 	public Block getGridSquare(int x, int y) {
-		Point position = new Point(x, y);
-		return getGridSquare(position);
+		return getGridSquare(new Point(x, y));
 	}
 
 	public Block getGridSquare(final Point position) {
@@ -70,12 +81,7 @@ public class Board implements ModelConstants, Serializable {
 	}
 
 	private void setGridSquare(Block block, int x, int y) {
-		Point position = new Point(x, y);
-		setGridSquare(block, position);
-	}
-
-	private void setGridSquare(Block block, final Point position) {
-		map.put(position, block);
+		map.put(new Point(x, y), block);
 	}
 
 	public void moveBlock(Block block, int direction) {
@@ -84,59 +90,60 @@ public class Board implements ModelConstants, Serializable {
 		}
 
 		Point position = nextPosition(block, direction);
-		eraseBlock(block);
-		block.setPosition(position);
-		placeBlock(block, position);
+		if (position != block.getPosition()) {
+			eraseBlock(block);
+			block.setPosition(position);
+			placeBlock(block, position);
+		}
 	}
 
 	private Point nextPosition(Block block, int direction) {
-		Point nextPosition = new Point();
-		Point currentPosition = block.getPosition();
-		Integer y = currentPosition.y;
-		Integer x = currentPosition.x;
-		Integer length = block.getLength();
+		Point next = new Point();
+		Point current = block.getPosition();
+		int x = current.x;
+		int y = current.y;
+		int length = block.getLength();
 
 		if (direction == FORWARD) {
 			if (block.getOrientation() == VERTICAL) {
 				if (y + length < size && !isOccupied(x, y + length)) {
-					nextPosition.setLocation(x, y + 1);
+					next.setLocation(x, y + 1);
 				} else {
-					nextPosition = currentPosition;
+					next = current;
 				}
 			} else {
 				if (x + length < size && !isOccupied(x + length, y)) {
-					nextPosition.setLocation(x + 1, y);
+					next.setLocation(x + 1, y);
 				} else {
-					nextPosition = currentPosition;
+					next = current;
 				}
 			}
 		} else {
 			if (block.getOrientation() == VERTICAL) {
 				if (y - 1 >= 0 && !isOccupied(x, y - 1)) {
-					nextPosition.setLocation(x, y - 1);
+					next.setLocation(x, y - 1);
 				} else {
-					nextPosition = currentPosition;
+					next = current;
 				}
 			} else {
 				if (x - 1 >= 0 && !isOccupied(x - 1, y)) {
-					nextPosition.setLocation(x - 1, y);
+					next.setLocation(x - 1, y);
 				} else {
-					nextPosition = currentPosition;
+					next = current;
 				}
 			}
 		}
-		return nextPosition;
+		return next;
 	}
 
 	private void placeBlock(Block block, final Point position) {
-		Integer length = block.getLength();
-		Integer orientation = block.getOrientation();
-		Integer x = position.x;
-		Integer y = position.y;
+		int length = block.getLength();
+		int x = position.x;
+		int y = position.y;
 
 		while (length-- > 0) {
 			setGridSquare(block, x, y);
-			if (orientation == VERTICAL) {
+			if (block.getOrientation() == VERTICAL) {
 				y++;
 			} else {
 				x++;
@@ -145,14 +152,13 @@ public class Board implements ModelConstants, Serializable {
 	}
 
 	private void eraseBlock(Block block) {
-		Integer x = block.getPosition().x;
-		Integer y = block.getPosition().y;
-		Integer length = block.getLength();
-		Integer orientation = block.getOrientation();
+		int length = block.getLength();
+		int x = block.getPosition().x;
+		int y = block.getPosition().y;
 
 		while (length-- > 0) {
 			setGridSquare(null, x, y);
-			if (orientation == VERTICAL) {
+			if (block.getOrientation() == VERTICAL) {
 				y++;
 			} else {
 				x++;
@@ -174,7 +180,6 @@ public class Board implements ModelConstants, Serializable {
 	 */
 
 	public void addBlock(final Point position, int length, int orientation) {
-		// Chequeo de parametros
 		if (length > size || length < 1) {
 			throw new IllegalArgumentException();
 		}
@@ -191,24 +196,9 @@ public class Board implements ModelConstants, Serializable {
 			}
 		}
 
-		Integer x = position.x;
-		Integer y = position.y;
-		Integer counter = length;
-
-		// Chequeo de si todo el espacio a donde va a estar el bloque este vacio
-		// Posiblemente puede ser una funcion. (El controller puede necesitarlo
-		// al hacer el move)
-		while (counter-- > 0) {
-			// Si la posicion esta ocupada, tirar una exception
-			if (isOccupied(x, y)) {
-				// TODO: Buscar una excepcion como la gente;
-				throw new IllegalArgumentException();
-			}
-			if (orientation == VERTICAL) {
-				y++;
-			} else {
-				x++;
-			}
+		if (isOccupied(position, length, orientation)) {
+			// TODO: Buscar una excepcion como la gente;
+			throw new IllegalArgumentException();
 		}
 
 		Block block = new Block(position, length, orientation);
@@ -229,50 +219,42 @@ public class Board implements ModelConstants, Serializable {
 	 *            the length of the block
 	 * @see #addBlock
 	 */
-	public void addPlayer(final int x, int length, int orientation) {
-		// Chequeo de parametros
+	public void addPlayer(final int x, int length) {
+		if (redCar != null) {
+			throw new IllegalArgumentException("Player already exists.");
+		}
+
 		if (length > size || length < 1) {
 			throw new IllegalArgumentException();
 		}
 		if (x < 0 || x + length > size) {
 			throw new IllegalArgumentException();
 		}
-		Integer counter = length;
-		Integer currX = x;
 
-		// Chequeo de si todo el espacio a donde va a estar el bloque este vacio
-		// Posiblemente puede ser una funcion. (El controller puede necesitarlo
-		// al hacer el move)
-		while (counter-- > 0) {
-			// Si la posicion esta ocupada, tirar una exception
-			if (isOccupied(currX, exit)) {
-				// TODO: Buscar una excepcion como la gente;
-				throw new IllegalArgumentException();
-			}
-			currX++;
+		if (isOccupied(new Point(x, exit), length, HORIZONTAL)) {
+			// TODO: Buscar una excepcion como la gente;
+			throw new IllegalArgumentException();
 		}
 
-		Point blockPos = new Point(x,exit);
-		Player player = new Player(blockPos, length, orientation);
+		Point playerPosition = new Point(x, exit);
+		Player player = new Player(playerPosition, length);
+		
 		blocks.add(player);
-		placeBlock(player, blockPos);
+		placeBlock(player, playerPosition);
 		redCar = player;
 	}
 
-	public Player getRedCar(){
+	public Player getRedCar() {
 		return redCar;
 	}
 
-	// BoardView lo usa
 	public int getSize() {
 		return this.size;
 	}
-	
-	// BoardView lo usa
+
 	public Set<Block> getBlocksSet() {
 		return this.blocks;
 	}
 
 }
 // TODO: Ver que hacer con el RedCar y la implementacion en AddBlock.
-
