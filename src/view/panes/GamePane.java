@@ -16,6 +16,7 @@ public class GamePane extends BorderPane{
     private BoardPane grid;
 
     public GamePane(Board board){
+    	this.setStyle("-fx-background-color: lightblue");
         backButton = new MenuButton("Back");
         boardView = new BoardView(board);
         grid = boardView.getGrid();

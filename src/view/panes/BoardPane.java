@@ -2,6 +2,7 @@ package view.panes;
 
 import javafx.event.EventHandler;
 
+
 import javafx.geometry.Insets;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
@@ -28,12 +29,10 @@ public class BoardPane extends GridPane implements ViewConstants {
 		this.setVgap(GRID_GAP);
 
 		for (int i = 0; i < size; i++) {
-			ColumnConstraints colConst = new ColumnConstraints();
-			colConst.setPercentWidth(100.0 / size);
+			ColumnConstraints colConst = new ColumnConstraints(BLOCKVIEW_WIDTH);
 			this.getColumnConstraints().add(colConst);
 			
-			RowConstraints rowConst = new RowConstraints();
-			rowConst.setPercentHeight(100.0 / size);
+			RowConstraints rowConst = new RowConstraints(BLOCKVIEW_HEIGHT);
 			this.getRowConstraints().add(rowConst);
 		}
 
@@ -63,11 +62,11 @@ public class BoardPane extends GridPane implements ViewConstants {
 	}
 
 	private Point convertMouseToGridSquare(MouseEvent e) {
-		Double gridSquareSizeX = (this.getWidth() - GRID_PADDING) / size;
-		Double gridSquareSizeY = (this.getHeight() - GRID_PADDING) / size;
+		Double gridSquareSizeX = BLOCKVIEW_WIDTH;
+		Double gridSquareSizeY = BLOCKVIEW_HEIGHT;
 
-		Double unprocessedX = e.getX() / gridSquareSizeX;
-		Double unprocessedY = e.getY() / gridSquareSizeY;
+		Double unprocessedX = (e.getX() - GRID_PADDING) / gridSquareSizeX;
+		Double unprocessedY = (e.getY() - GRID_PADDING) / gridSquareSizeY;
 
 		Integer gridPosX = unprocessedX.intValue();
 		Integer gridPosY = unprocessedY.intValue();
@@ -90,5 +89,8 @@ public class BoardPane extends GridPane implements ViewConstants {
 	public boolean isMousePressed() {
 		return mouseIsPressed;
 	}
-
+	
+	public int getSize() {
+		return size;
+	}
 }
