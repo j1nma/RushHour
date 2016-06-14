@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import model.Block;
 import model.Board;
 import model.ModelConstants;
@@ -27,6 +29,7 @@ public class BoardView extends ObjectView<Board> implements ModelConstants {
 		BlockView blockview;
 
 		grid.getChildren().clear();
+		addBorderRectangles(grid);
 
 		for (Block block : object.getBlocksSet()) {
 			int x = block.getPosition().x;
@@ -35,7 +38,6 @@ public class BoardView extends ObjectView<Board> implements ModelConstants {
 			blockview = blockviews.get(block);
 
 			for (ImageView imageView : blockview.getBlockViewImages()) {
-
 				grid.add(imageView, x, y);
 				if (block.getOrientation() == HORIZONTAL) {
 					x++;
@@ -63,5 +65,17 @@ public class BoardView extends ObjectView<Board> implements ModelConstants {
 	public BoardPane getGrid() {
 		return this.grid;
 	}
-
+	
+	private void addBorderRectangles(BoardPane grid) {
+		int size = grid.getSize();
+		for(int x = 0; x < size; x++) {
+			for(int y = 0; y < size; y++) {
+				Rectangle rectangle = new Rectangle(BLOCKVIEW_WIDTH, BLOCKVIEW_HEIGHT);
+				rectangle.setStroke(Color.BLACK);
+				rectangle.setFill(Color.GREY);
+				rectangle.setStrokeWidth(2.0);
+				grid.add(rectangle, y, x);
+			}
+		}
+	}
 }

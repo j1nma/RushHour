@@ -65,7 +65,4 @@ public class BlockView extends ObjectView<Block> implements ModelConstants {
 	public ArrayList<ImageView> getBlockViewImages() {
 		return this.images;
 	}
-
-	// set on action
-
 }

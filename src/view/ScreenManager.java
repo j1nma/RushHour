@@ -18,6 +18,7 @@ public class ScreenManager implements ViewConstants {
         stage.setTitle(name);
         stage.setResizable(false);
 		stage.setScene(scene);
+		System.out.println(stage.getHeight() + "\n" + stage.getWidth());
 
 		root.setVisible(true);
 	}
