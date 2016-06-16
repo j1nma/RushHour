@@ -1,8 +1,10 @@
 package controller.states;
 
-import java.awt.Point;
+import java.util.Random;
+
 
 import controller.GameStateManager;
+import controller.Loader;
 import controller.handlers.GameHandler;
 import model.Board;
 import model.ModelConstants;
@@ -10,20 +12,32 @@ import view.panes.GamePane;
 
 public class GameState extends State implements ModelConstants {
 	private Board board;
+	private Loader boardLoader;
+	private String filePath;
+	private static final Random generator = new Random();
 
-	// TODO: eventualmente va a recibir la board desde el Loader.
 	public GameState(GameStateManager gsm) {
 		super(gsm);
-		board = new Board(6, 1);
+		
+		boardLoader = new Loader();
+		
+		board = boardLoader.loadBoard("games/chico.ser");
 
-		board.addBlock(new Point(0, 0), 2, HORIZONTAL);
-		board.addBlock(new Point(0, 1), 2, HORIZONTAL);
-		board.addBlock(new Point(0, 4), 3, HORIZONTAL);
-		board.addBlock(new Point(0, 5), 4, HORIZONTAL);
-		board.addBlock(new Point(3, 3), 1, HORIZONTAL);
-		board.addBlock(new Point(4, 0), 2, VERTICAL);
-		board.addPlayer(2, 2);
-		// board.addPlayer(3, 2);
+		pane = new GamePane(board);
+
+		handler = new GameHandler(gsm, this, board);
+
+	}
+	
+	public GameState(GameStateManager gsm, LevelDifficulty difficulty) {
+		super(gsm);
+		filePath = "games/";
+		filePath += difficulty.toString().toLowerCase() + "/" + difficulty.toString().toLowerCase() + generator.nextInt(3) + ".ser";
+		
+		boardLoader = new Loader();
+		
+		board = boardLoader.loadBoard(filePath);
+
 		pane = new GamePane(board);
 
 		handler = new GameHandler(gsm, this, board);

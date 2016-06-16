@@ -25,4 +25,4 @@ public enum Color {
 	public double getColor() {
 		return value;
 	}
-};
+}

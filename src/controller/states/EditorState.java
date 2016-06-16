@@ -12,4 +12,12 @@ public class EditorState extends State {
 		pane = new EditorPane();
 		handler = new EditorHandler(gsm, this);
 	}
+	
+	public void entered() {
+		super.entered();
+	}
+
+	public void leaving() {
+		super.leaving();
+	}
 }

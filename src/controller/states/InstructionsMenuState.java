@@ -1,8 +1,8 @@
 package controller.states;
 
 import controller.GameStateManager;
+
 import controller.handlers.InstructionsMenuHandler;
-import view.GameScene;
 import view.panes.InstructionsMenuPane;
 
 public class InstructionsMenuState extends State{

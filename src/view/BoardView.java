@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import java.util.Map;
 
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -24,6 +25,7 @@ public class BoardView extends ObjectView<Board> {
 		super(board);
 
 		grid = new BoardPane(board.getSize());
+//		grid.setMaxHeight(10);
 		blockviews = new HashMap<Block, BlockView>();
 
 		setBlockViews();
@@ -42,6 +44,7 @@ public class BoardView extends ObjectView<Board> {
 			blockview = blockviews.get(block);
 
 			for (ImageView imageView : blockview.getBlockViewImages()) {
+//				imageView.setFitWidth(10);
 				grid.add(imageView, x, y);
 				if (block.getOrientation() == HORIZONTAL) {
 					x++;
@@ -87,7 +90,7 @@ public class BoardView extends ObjectView<Board> {
 		}
 
 		exitText.setRotate(90);
-		exitText.setTranslateX(40);
+		exitText.setTranslateX(EXITSIGN_TRANSLATE);
 		exitText.setFill(Color.RED);
 
 		grid.add(exitText, grid.getSize() - 1, exit);

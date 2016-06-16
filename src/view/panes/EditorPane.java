@@ -1,11 +1,17 @@
 package view.panes;
 
 import java.awt.Point;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.Optional;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
@@ -26,10 +32,12 @@ public class EditorPane extends BorderPane implements ModelConstants, ViewConsta
 	private int blockOrientation;
 	private boolean boardWasBuilt;
 	private boolean playerWasBuilt;
+
 	private Point position;
 	private Board board;
 	private BoardView boardView;
 	private BoardPane grid;
+
 	private Button backButton;
 	private Button submitButton;
 	private Button addBlockButton;
@@ -108,6 +116,9 @@ public class EditorPane extends BorderPane implements ModelConstants, ViewConsta
 					"From 0 (first row) to " + (boardSize - 1) + ".");
 		} else {
 			boardSize = isc.fromString(boardSizeInput.getText());
+			if (boardSize >= BOARDSIZE_LIMIT) {
+				createAlert(AlertType.WARNING, "This board may not fit in your screen.");
+			}
 			boardExit = isc.fromString(boardExitInput.getText());
 			return true;
 		}
@@ -131,6 +142,7 @@ public class EditorPane extends BorderPane implements ModelConstants, ViewConsta
 			grid.setAlignment(Pos.CENTER);// ojoooo
 			grid.setMaxWidth(500);
 			this.setCenter(grid);
+			playerWasBuilt = false;
 			blockXInput.clear();
 			blockLengthInput.clear();
 			hBottomBox.getChildren().clear();
@@ -233,9 +245,27 @@ public class EditorPane extends BorderPane implements ModelConstants, ViewConsta
 					verticalToggle, addBlockButton);
 		}
 	}
-	
+
 	public void save() {
-		
+		String fileName = "games/RHgame.ser";
+		TextInputDialog dialog = new TextInputDialog("RHgame");
+
+		dialog.setTitle("RushHour");
+		dialog.setHeaderText("Saving your board in games folder");
+		dialog.setContentText("Save board as:");
+
+		Optional<String> result = dialog.showAndWait();
+		if (result.isPresent()) {
+			fileName = "games/" + result.get() + ".ser";
+		}
+
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)));
+			out.writeObject(board);
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void createAlert(AlertType type, String header, String context) {

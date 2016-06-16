@@ -2,6 +2,7 @@ import controller.GameStateManager;
 
 import controller.states.MainMenuState;
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import view.ScreenManager;
 
@@ -9,7 +10,6 @@ import view.ScreenManager;
  * Game sets the primary stage: loads the background image and creates a menu
  * manager.
  * 
- * @author Juan M. Alonso, Emiliano Vazquez
  *
  */
 public class Game extends Application {
@@ -22,6 +22,7 @@ public class Game extends Application {
 		screenManager = new ScreenManager(primaryStage,"RushHour");
 		gsm = new GameStateManager(screenManager);
 		gsm.push(new MainMenuState(gsm));
+		primaryStage.getIcons().add(new Image("res/images/GameIcon.png"));
 		primaryStage.show();
 	}
 

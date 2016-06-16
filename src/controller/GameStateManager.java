@@ -39,4 +39,5 @@ public class GameStateManager extends StackPane {
 		states.pop();
 		states.push(state);
 	}
+	
 }

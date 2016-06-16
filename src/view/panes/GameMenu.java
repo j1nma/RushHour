@@ -18,6 +18,8 @@ public abstract class GameMenu extends StackPane implements ViewConstants {
 		list.setAlignment(Pos.CENTER);
 		list.setPrefWidth(BACKGROUND_SIZE);
 		list.setPrefHeight(BACKGROUND_SIZE);
+		this.setHeight(BACKGROUND_SIZE);
+		this.setWidth(BACKGROUND_SIZE);
 
 		ImageView menuImage = new ImageView(new Image(BACKGROUND_PATH));
 		menuImage.setEffect(new GaussianBlur(BACKGROUND_GAUSSIAN_BLUR));

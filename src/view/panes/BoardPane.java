@@ -2,7 +2,9 @@ package view.panes;
 
 import javafx.event.EventHandler;
 
+
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -22,11 +24,10 @@ public class BoardPane extends GridPane implements ViewConstants {
 	public BoardPane(int size) {
 
 		this.size = size;
-		this.setGridLinesVisible(true);
-		this.setPadding(new Insets(GRID_PADDING));
-//		this.setStyle(GRID_STYLE);
-//		this.setHgap(GRID_GAP);
-//		this.setVgap(GRID_GAP);
+//		this.setPadding(new Insets(GRID_PADDING));
+//		this.setAlignment(Pos.CENTER);
+		this.setHeight(this.size * BLOCKVIEW_HEIGHT);
+		this.setWidth(this.size * BLOCKVIEW_WIDTH);
 
 		for (int i = 0; i < size; i++) {
             ColumnConstraints colConst = new ColumnConstraints(BLOCKVIEW_WIDTH);
@@ -65,8 +66,8 @@ public class BoardPane extends GridPane implements ViewConstants {
 		Double gridSquareSizeX = BLOCKVIEW_WIDTH;
 		Double gridSquareSizeY = BLOCKVIEW_HEIGHT;
 
-		Double unprocessedX = (e.getX() - GRID_PADDING) / gridSquareSizeX;
-		Double unprocessedY = (e.getY() - GRID_PADDING) / gridSquareSizeY;
+		Double unprocessedX = (e.getX()) / gridSquareSizeX;
+		Double unprocessedY = (e.getY()) / gridSquareSizeY;
 
 		Integer gridPosX = unprocessedX.intValue();
 		Integer gridPosY = unprocessedY.intValue();

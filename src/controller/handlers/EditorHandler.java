@@ -18,6 +18,10 @@ public class EditorHandler extends Handler<EditorPane> {
 
 	@Override
 	public void handle(long now) {
+
+		if (pane.isBackPressed()) {
+			gsm.pop();
+		}
 		
 		if (pane.isSubmitPressed()) {
 			if (!submitWasPressed) {
@@ -59,12 +63,6 @@ public class EditorHandler extends Handler<EditorPane> {
 			}
 		} else if (saveWasPressed) {
 			saveWasPressed = false;
-		}
-		
-		
-
-		if (pane.isBackPressed()) {
-			gsm.pop();
 		}
 
 	}

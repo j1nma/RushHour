@@ -1,8 +1,13 @@
 package model;
 
 import java.awt.Point;
+import java.io.Serializable;
 
-public class Block implements ModelConstants {
+public class Block implements ModelConstants, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2L;
 	private int orientation;
 	private int length;
 	private Point position;

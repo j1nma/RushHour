@@ -16,6 +16,10 @@ import java.util.Set;
  * Player block.
  */
 public class Board implements ModelConstants, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int size;
 	private int exit;
 

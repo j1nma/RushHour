@@ -9,7 +9,6 @@ public class EditorInput extends TextField implements ViewConstants {
 
 	public EditorInput(String promptText) {
 		this.setPromptText(promptText);
-		this.setFocusTraversable(false);
 		this.setFont(Font.font(FONT_SIZE_EDITOR));
 		this.setPrefSize(INPUT_WIDTH, INPUT_HEIGHT);
 		this.addEventFilter(KeyEvent.KEY_TYPED, numericValidation());

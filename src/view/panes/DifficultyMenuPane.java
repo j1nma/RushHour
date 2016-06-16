@@ -11,25 +11,25 @@ public class DifficultyMenuPane extends GameMenu {
 	private MenuButton btnHard;
 	private MenuButton btnExpert;
 
-	public DifficultyMenuPane(){
+	public DifficultyMenuPane() {
 		btnBack = new MenuButton("Back");
-		btnEasy = new MenuButton("Easy", Color.GREEN);
-		btnMedium = new MenuButton("Medium", Color.YELLOW);
-		btnHard = new MenuButton("Hard", Color.ORANGE);
+		btnEasy = new MenuButton("Beginner", Color.GREEN);
+		btnMedium = new MenuButton("Intermediate", Color.YELLOW);
+		btnHard = new MenuButton("Advanced", Color.ORANGE);
 		btnExpert = new MenuButton("Expert", Color.RED);
 
 		list.getChildren().addAll(btnEasy, btnMedium, btnHard, btnExpert, btnBack);
 	}
 
-	public boolean isEasyPressed() {
+	public boolean isBeginnerPressed() {
 		return btnEasy.isPressed();
 	}
 
-	public boolean isMediumPressed() {
+	public boolean isIntermediatePressed() {
 		return btnMedium.isPressed();
 	}
 
-	public boolean isHardPressed() {
+	public boolean isAdvancedPressed() {
 		return btnHard.isPressed();
 	}
 

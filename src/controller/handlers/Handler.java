@@ -11,7 +11,7 @@ public abstract class Handler<T extends Pane> extends AnimationTimer {
 	protected State state;
 	protected T pane;
 
-	Handler(GameStateManager gsm, State state) {
+	public Handler(GameStateManager gsm, State state) {
 		this.gsm = gsm;
 		this.state = state;
 		pane = (T) state.getPane();

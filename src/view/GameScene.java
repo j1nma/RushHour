@@ -3,7 +3,7 @@ package view;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
-public class GameScene extends Scene{
+public class GameScene extends Scene {
 
     private Pane root;
 
@@ -12,7 +12,7 @@ public class GameScene extends Scene{
         this.root = root;
     }
 
-    public Pane getPane(){
+    public Pane getPane() {
         return root;
     }
 }
