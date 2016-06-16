@@ -1,6 +1,7 @@
 package controller.handlers;
 
 import controller.GameStateManager;
+import controller.states.EditorState;
 import controller.states.GameState;
 import controller.states.InstructionsMenuState;
 import controller.states.PlayMenuState;
@@ -24,6 +25,10 @@ public class MainMenuHandler extends Handler<MainMenuPane>{
 //            gsm.push(new TestState(gsm,));
             gsm.push(new GameState(gsm));
         }
+        
+        if(pane.isCreatePressed()){
+          gsm.push(new EditorState(gsm));
+      }
 
         if(pane.isInstructionsPressed()){
             gsm.push(new InstructionsMenuState(gsm));

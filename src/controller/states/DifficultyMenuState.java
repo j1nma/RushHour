@@ -1,11 +1,12 @@
 package controller.states;
 
 import controller.GameStateManager;
+
+
 import controller.handlers.DifficultyMenuHandler;
-import view.GameScene;
 import view.panes.DifficultyMenuPane;
 
-public class DifficultyMenuState extends State{
+public class DifficultyMenuState extends State {
 
     public DifficultyMenuState (GameStateManager gsm) {
         super(gsm);

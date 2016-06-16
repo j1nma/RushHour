@@ -10,7 +10,7 @@ public class MenuButton extends Button implements ViewConstants {
 
 	public MenuButton(String text, Paint color) {
 		super(text);
-		this.setFont(Font.font(FONT_SIZE));
+		this.setFont(Font.font(FONT_SIZE_MENU));
 		this.setTextFill(color);
 		this.setStyle(BUTTON_STYLE_DEFAULT);
 		this.setOpacity(BUTTON_OPACITY);

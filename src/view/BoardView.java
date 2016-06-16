@@ -1,35 +1,39 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
 import java.util.Map;
 
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.Block;
 import model.Board;
-import model.ModelConstants;
 import model.Player;
 import view.panes.BoardPane;
 
-public class BoardView extends ObjectView<Board> implements ModelConstants {
+public class BoardView extends ObjectView<Board> {
 	private BoardPane grid;
 	private Map<Block, BlockView> blockviews;
+	private ArrayList<Node> background;
 
 	public BoardView(Board board) {
 		super(board);
 
 		grid = new BoardPane(board.getSize());
 		blockviews = new HashMap<Block, BlockView>();
-		setBlockViews();
 
+		setBlockViews();
+		addBackground(board.getExit());
 	}
 
 	public void refresh() {
 		BlockView blockview;
 
-		grid.getChildren().clear();
-		addBorderRectangles(grid);
+		grid.getChildren().retainAll(background);
 
 		for (Block block : object.getBlocksSet()) {
 			int x = block.getPosition().x;
@@ -49,7 +53,7 @@ public class BoardView extends ObjectView<Board> implements ModelConstants {
 
 	}
 
-	private void setBlockViews() {
+	public void setBlockViews() {
 		BlockView blockview;
 
 		for (Block block : object.getBlocksSet()) {
@@ -65,17 +69,29 @@ public class BoardView extends ObjectView<Board> implements ModelConstants {
 	public BoardPane getGrid() {
 		return this.grid;
 	}
-	
-	private void addBorderRectangles(BoardPane grid) {
+
+	private void addBackground(int exit) {
+		background = new ArrayList<Node>();
 		int size = grid.getSize();
-		for(int x = 0; x < size; x++) {
-			for(int y = 0; y < size; y++) {
+		Text exitText = new Text("EXIT");
+
+		for (int x = 0; x < size; x++) {
+			for (int y = 0; y < size; y++) {
 				Rectangle rectangle = new Rectangle(BLOCKVIEW_WIDTH, BLOCKVIEW_HEIGHT);
 				rectangle.setStroke(Color.BLACK);
 				rectangle.setFill(Color.GREY);
-				rectangle.setStrokeWidth(2.0);
-				grid.add(rectangle, y, x);
+				rectangle.setStrokeWidth(1.0);
+				grid.add(rectangle, x, y);
+				background.add(rectangle);
 			}
 		}
+
+		exitText.setRotate(90);
+		exitText.setTranslateX(40);
+		exitText.setFill(Color.RED);
+
+		grid.add(exitText, grid.getSize() - 1, exit);
+		background.add(exitText);
 	}
+
 }

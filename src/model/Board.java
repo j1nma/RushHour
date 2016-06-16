@@ -38,7 +38,7 @@ public class Board implements ModelConstants, Serializable {
 		// posiciones de largo
 		// Size must belong to [0,size-1]
 		if (size < 2 || exit < 0 || exit >= size) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Size and exit must be positive. Exit must belong to [0,size-1]");
 		}
 		this.size = size;
 		this.exit = exit;
@@ -181,24 +181,24 @@ public class Board implements ModelConstants, Serializable {
 
 	public void addBlock(final Point position, int length, int orientation) {
 		if (length > size || length < 1) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Length must belong to [1,size]");
 		}
 		if (position.x < 0 || position.y < 0 || position.x >= size || position.y >= size) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Coordiantes must belong to [0,size-1]");
 		}
 		if (orientation == HORIZONTAL) {
 			if (position.x + length > size) {
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException("Horizontal block doesn't fit the grid");
 			}
 		} else {
 			if (position.y + length > size) {
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException("Vertical block doesn't fit the grid");
 			}
 		}
 
 		if (isOccupied(position, length, orientation)) {
 			// TODO: Buscar una excepcion como la gente;
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("One or all of the block's positions is occupied");
 		}
 
 		Block block = new Block(position, length, orientation);
@@ -213,8 +213,9 @@ public class Board implements ModelConstants, Serializable {
 	 * Similar to addBlock, but a Player's orientation is always HORIZONTAL and
 	 * its position on the y axis always equal to Board's exit.
 	 *
-	 * @param position
-	 *            the position that refers to the block
+	 * @param x
+	 *            the column index of the red car. Y coordinate is always equal
+	 *            to exit and orientation to HORIZONTAL
 	 * @param length
 	 *            the length of the block
 	 * @see #addBlock
@@ -225,20 +226,23 @@ public class Board implements ModelConstants, Serializable {
 		}
 
 		if (length > size || length < 1) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Length must belong to [1,size]");
 		}
-		if (x < 0 || x + length > size) {
-			throw new IllegalArgumentException();
+
+		if (x < 0 || x >= size) {
+			throw new IllegalArgumentException("Coordinate x must belong to [0,size-1]");
+		}
+		if (x + length > size) {
+			throw new IllegalArgumentException("Red car doesn't fit the grid");
 		}
 
 		if (isOccupied(new Point(x, exit), length, HORIZONTAL)) {
-			// TODO: Buscar una excepcion como la gente;
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("One of the block's positions is occupied");
 		}
 
 		Point playerPosition = new Point(x, exit);
 		Player player = new Player(playerPosition, length);
-		
+
 		blocks.add(player);
 		placeBlock(player, playerPosition);
 		redCar = player;
@@ -249,12 +253,15 @@ public class Board implements ModelConstants, Serializable {
 	}
 
 	public int getSize() {
-		return this.size;
+		return size;
 	}
 
 	public Set<Block> getBlocksSet() {
-		return this.blocks;
+		return blocks;
+	}
+
+	public int getExit() {
+		return exit;
 	}
 
 }
-// TODO: Ver que hacer con el RedCar y la implementacion en AddBlock.
