@@ -137,12 +137,13 @@ public class EditorPane extends BorderPane implements ModelConstants, ViewConsta
 			grid.setAlignment(Pos.CENTER);
 			this.setCenter(grid);
 			BorderPane.setMargin(grid, new Insets(BORDER_MARGIN, DOUBLE_BORDER_MARGIN, BORDER_MARGIN, DOUBLE_BORDER_MARGIN));
-			this.setHeightWidth();
 			playerWasBuilt = false;
 			blockXInput.clear();
 			blockLengthInput.clear();
 			hBottomBox.getChildren().clear();
 			hBottomBox.getChildren().addAll(new Label("Insert player:"), blockXInput, blockLengthInput, addBlockButton);
+			hBottomBox.setMinWidth(EDITOR_BOTTOM_BOX_SHORT_WIDTH);
+			this.setHeightWidth();
 		}
 	}
 
