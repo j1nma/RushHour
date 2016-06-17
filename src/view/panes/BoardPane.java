@@ -2,6 +2,9 @@ package view.panes;
 
 import javafx.event.EventHandler;
 
+
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -23,12 +26,13 @@ public class BoardPane extends GridPane implements ViewConstants {
 		this.size = size;
 		this.setHeight(this.size * BLOCKVIEW_HEIGHT);
 		this.setWidth(this.size * BLOCKVIEW_WIDTH);
+		this.setAlignment(Pos.CENTER);
 
 		for (int i = 0; i < size; i++) {
-			ColumnConstraints colConst = new ColumnConstraints(BLOCKVIEW_WIDTH);
+            ColumnConstraints colConst = new ColumnConstraints(BLOCKVIEW_WIDTH);
 			this.getColumnConstraints().add(colConst);
-
-			RowConstraints rowConst = new RowConstraints(BLOCKVIEW_HEIGHT);
+			
+            RowConstraints rowConst = new RowConstraints(BLOCKVIEW_HEIGHT);
 			this.getRowConstraints().add(rowConst);
 		}
 
@@ -66,7 +70,7 @@ public class BoardPane extends GridPane implements ViewConstants {
 
 		Integer gridPosX = unprocessedX.intValue();
 		Integer gridPosY = unprocessedY.intValue();
-
+		
 		return new Point(gridPosX, gridPosY);
 	}
 
@@ -85,8 +89,10 @@ public class BoardPane extends GridPane implements ViewConstants {
 	public boolean isMousePressed() {
 		return mouseIsPressed;
 	}
-
+	
 	public int getSize() {
 		return size;
 	}
+
+
 }

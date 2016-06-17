@@ -1,6 +1,7 @@
 package view.panes;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
@@ -26,19 +27,23 @@ public class GamePane extends BorderPane implements ViewConstants {
 		boardView = new BoardView(board);
 		
 		surrenderButton.setFont(Font.font(FONT_SIZE_GAME));
-		surrenderButton.setMinHeight(35.0);
 		grid = boardView.getGrid();
 		
 		hTopBox = new HBox(surrenderButton);
 		hTopBox.setAlignment(Pos.TOP_CENTER);
-		hTopBox.setPadding(TOPBOX_PADDING);
-		hTopBox.setSpacing(NODE_SEPARATION);
+		hTopBox.setMinHeight(GAME_BUTTON_HEIGHT);
 		
 		this.setCenter(grid);
 		this.setTop(hTopBox);
+		BorderPane.setMargin(hTopBox, new Insets(BORDER_MARGIN, 0, 0, 0));
+		BorderPane.setMargin(grid, new Insets(BORDER_MARGIN, DOUBLE_BORDER_MARGIN, BORDER_MARGIN, DOUBLE_BORDER_MARGIN));
         this.setStyle(GAMEPANE_STYLE);
         
-        this.setHeight(grid.getHeight() + 50.0 + 150*2.0);
+        this.setHeight(grid.getHeight() + hTopBox.getMinHeight() + BORDER_MARGIN * 4);
+        if(grid.getWidth() + DOUBLE_BORDER_MARGIN * 2 > GAME_BUTTON_WIDTH)
+        	this.setWidth(grid.getWidth() + DOUBLE_BORDER_MARGIN * 2); 
+        else
+        	this.setWidth(GAME_BUTTON_WIDTH);
 
 		input = new HashSet<String>();
 		this.setOnKeyPressed(new EventHandler<KeyEvent>() {
