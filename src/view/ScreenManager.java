@@ -1,11 +1,13 @@
 package view;
 
 import javafx.scene.Scene;
-
+import view.panes.EditorPane;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 
 public class ScreenManager implements ViewConstants {
 
@@ -28,7 +30,28 @@ public class ScreenManager implements ViewConstants {
 	public void setPane(Pane pane) {
 		root.getChildren().clear();
 		root.getChildren().add(pane);
-		stage.setHeight(pane.getHeight());
-		stage.setWidth(pane.getWidth());
+		
+		InvalidationListener heightListener = new InvalidationListener(){
+			public void invalidated(Observable ov) {
+				stage.setHeight(pane.getHeight());
+			}
+		};
+		InvalidationListener widthListener = new InvalidationListener(){
+			public void invalidated(Observable ov) {
+				stage.setWidth(pane.getWidth());
+			}
+		};
+		
+		if(pane instanceof EditorPane) {
+			pane.heightProperty().addListener(heightListener);
+			pane.widthProperty().addListener(widthListener);
+		}
+		else {
+			stage.setHeight(pane.getHeight());
+			stage.setWidth(pane.getWidth());
+			pane.heightProperty().removeListener(heightListener);
+			pane.widthProperty().removeListener(widthListener);
+		}
+			
 	}
 }
