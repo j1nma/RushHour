@@ -21,8 +21,7 @@ public class Game extends Application {
 
 		screenManager = new ScreenManager(primaryStage,"RushHour");
 		gsm = new GameStateManager(screenManager);
-		gsm.push(new MainMenuState(gsm));
-		primaryStage.getIcons().add(new Image("res/images/GameIcon.png"));
+		gsm.push(new MainMenuState(gsm,primaryStage));
 		primaryStage.show();
 	}
 

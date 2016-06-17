@@ -14,10 +14,13 @@ public class Block implements ModelConstants, Serializable {
 
 	public Block(final Point position, int length, int orientation) {
 		if (orientation != VERTICAL && orientation != HORIZONTAL) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Illegal orientation");
 		}
 		if (length < 1) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Length must be positive.");
+		}
+		if (position == null) {
+			throw new IllegalArgumentException("Position is null");
 		}
 		this.orientation = orientation;
 		this.length = length;

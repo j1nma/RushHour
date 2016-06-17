@@ -193,24 +193,16 @@ public class EditorPane extends BorderPane implements ModelConstants, ViewConsta
 	}
 
 	public void buildBlock() {
-		boolean blockIsBuilt = false;
 
 		if (blockIsSet()) {
 			try {
-				board.addBlock(position, length, blockOrientation);
-				blockIsBuilt = true;
+				boardView.setBlockView(board.addBlock(position, length, blockOrientation));
+				boardView.refresh();
+				grid = boardView.getGrid();
 			} catch (IllegalArgumentException e) {
 				createAlert(AlertType.ERROR, "Invalid block.", e.getMessage());
 			}
 		}
-
-		if (blockIsBuilt) {
-			boardView.setBlockViews();
-			boardView.refresh();
-			grid = boardView.getGrid();
-			this.setCenter(grid);
-		}
-
 	}
 
 	public void buildBlocks() {
@@ -220,34 +212,32 @@ public class EditorPane extends BorderPane implements ModelConstants, ViewConsta
 		} else {
 			buildPlayer();
 		}
-
 	}
 
 	public void buildPlayer() {
 
 		if (playerIsSet()) {
 			try {
-				board.addPlayer(position.x, length);
 				playerWasBuilt = true;
+				boardView.setBlockView(board.addPlayer(position.x, length));
+				boardView.refresh();
+				grid = boardView.getGrid();
+				blockXInput.clear();
+				blockYInput.clear();
+				blockLengthInput.clear();
+				horizontalToggle.setSelected(false);
+				verticalToggle.setSelected(false);
+				hBottomBox.getChildren().clear();
+				hBottomBox.getChildren().addAll(blockXInput, blockYInput, blockLengthInput, horizontalToggle,
+						verticalToggle, addBlockButton);
 			} catch (IllegalArgumentException e) {
 				createAlert(AlertType.INFORMATION, "Invalid red car.");
 			}
 		}
-
-		if (playerWasBuilt) {
-			boardView.setBlockViews();
-			boardView.refresh();
-			grid = boardView.getGrid();
-			blockXInput.clear();
-			blockLengthInput.clear();
-			hBottomBox.getChildren().clear();
-			hBottomBox.getChildren().addAll(blockXInput, blockYInput, blockLengthInput, horizontalToggle,
-					verticalToggle, addBlockButton);
-		}
 	}
 
 	public void save() {
-		String fileName = "games/RHgame.ser";
+		String fileName = "";
 		TextInputDialog dialog = new TextInputDialog("RHgame");
 
 		dialog.setTitle("RushHour");

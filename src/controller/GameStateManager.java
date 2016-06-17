@@ -1,6 +1,7 @@
 package controller;
 
 import controller.states.State;
+
 import javafx.scene.layout.StackPane;
 import view.ScreenManager;
 
@@ -39,5 +40,4 @@ public class GameStateManager extends StackPane {
 		states.pop();
 		states.push(state);
 	}
-	
 }

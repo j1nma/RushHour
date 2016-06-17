@@ -1,7 +1,6 @@
 package view.panes;
 
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
@@ -17,30 +16,27 @@ import java.util.Set;
 
 public class GamePane extends BorderPane implements ViewConstants {
 	private BoardView boardView;
-	private Button backButton;
+	private Button surrenderButton;
 	private Set<String> input;
 	private BoardPane grid;
 	private HBox hTopBox;
 
 	public GamePane(Board board) {
-		backButton = new Button("Back");
+		surrenderButton = new Button("Surrender");
 		boardView = new BoardView(board);
 		
-		backButton.setFont(Font.font(FONT_SIZE_GAME));
-		backButton.setMinHeight(35.0);
-		backButton.setMaxWidth(80.0);
+		surrenderButton.setFont(Font.font(FONT_SIZE_GAME));
+		surrenderButton.setMinHeight(35.0);
 		grid = boardView.getGrid();
 		
-		hTopBox = new HBox(backButton);
+		hTopBox = new HBox(surrenderButton);
 		hTopBox.setAlignment(Pos.TOP_CENTER);
 		hTopBox.setPadding(TOPBOX_PADDING);
 		hTopBox.setSpacing(NODE_SEPARATION);
 		
 		this.setCenter(grid);
-		this.setMargin(grid, new Insets(30));
 		this.setTop(hTopBox);
         this.setStyle(GAMEPANE_STYLE);
-        this.setMargin(hTopBox, new Insets(20));
         
         this.setHeight(grid.getHeight() + 50.0 + 150*2.0);
 
@@ -59,8 +55,8 @@ public class GamePane extends BorderPane implements ViewConstants {
 		});
 	}
 
-	public boolean isBackPressed() {
-		return backButton.isPressed();
+	public boolean isSurrenderPressed() {
+		return surrenderButton.isPressed();
 	}
 
 	public boolean isKeyPressed(String key) {
@@ -80,6 +76,6 @@ public class GamePane extends BorderPane implements ViewConstants {
 	}
 
 	public Button getButton() {
-		return backButton;
+		return surrenderButton;
 	}
 }

@@ -1,27 +1,33 @@
 package controller.handlers;
 
+import java.awt.Point;
+
 import controller.GameStateManager;
+import controller.states.DoubleGameState;
 import controller.states.State;
+import javafx.scene.layout.Pane;
 import model.Block;
 import model.Board;
 import model.ModelConstants;
 import view.panes.BoardPane;
 import view.panes.GamePane;
 
-import java.awt.*;
-
-public class GameHandler extends Handler<GamePane> implements ModelConstants {
+public class DoubleGameHandler extends Handler<GamePane> implements ModelConstants {
 	private Board board;
+	private Board opponentBoard;
 	private Block selectedBlock;
 	private Point startPos;
 	private Point dragPos;
 	private BoardPane grid;
 	private boolean mouseWasPressed;
+	private GamePane opponentPane;
 
-	public GameHandler(GameStateManager gsm, State state, Board board) {
+	public DoubleGameHandler(GameStateManager gsm, DoubleGameState state, Board board, Board opponentBoard) {
 		super(gsm, state);
 		this.board = board;
+		this.opponentBoard = opponentBoard;
 		this.grid = pane.getGrid();
+		this.opponentPane = state.getOpponentPane();
 	}
 
 	@Override
@@ -73,7 +79,7 @@ public class GameHandler extends Handler<GamePane> implements ModelConstants {
 
 		pane.refresh();
 		if (hasMoved) {
-			// gsm.push(new SecondPlayerState(gsm,));
+			gsm.push(state);
 		}
 
 	}

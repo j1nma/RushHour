@@ -7,17 +7,17 @@ import javafx.scene.text.Font;
 
 public class InstructionsMenuPane extends GameMenu {
 	private MenuButton btnBack;
-	Canvas canvas;
-	GraphicsContext gc;
+	private Canvas canvas;
+	private GraphicsContext gc;
 
 	public InstructionsMenuPane() {
 		btnBack = new MenuButton("Back");
-		canvas = new Canvas(500, 400);
+		canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
 		gc = canvas.getGraphicsContext2D();
-		gc.setFont(new Font(24));
+		gc.setFont(new Font(FONT_SIZE_INSTRUCTIONS));
 		gc.fillText(INSTRUCTIONS, 0, 0);
-		
-		list.getChildren().addAll(btnBack,canvas);
+
+		list.getChildren().addAll(btnBack, canvas);
 	}
 
 	public boolean isBackPressed() {

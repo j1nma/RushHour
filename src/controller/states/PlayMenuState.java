@@ -12,12 +12,4 @@ public class PlayMenuState extends State {
 		pane = new PlayMenuPane();
 		handler = new PlayMenuHandler(gsm, this);
 	}
-
-	public void entered() {
-		super.entered();
-	}
-
-	public void leaving() {
-		super.leaving();
-	}
 }

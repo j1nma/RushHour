@@ -1,11 +1,12 @@
 package controller.handlers;
 
 import controller.GameStateManager;
+import controller.ControllerConstants;
 import controller.states.DifficultyMenuState;
 import controller.states.State;
 import view.panes.PlayMenuPane;
 
-public class PlayMenuHandler extends Handler<PlayMenuPane> {
+public class PlayMenuHandler extends Handler<PlayMenuPane> implements ControllerConstants {
 
 	public PlayMenuHandler(GameStateManager gsm, State state) {
 		super(gsm, state);
@@ -18,11 +19,11 @@ public class PlayMenuHandler extends Handler<PlayMenuPane> {
 		}
 
 		if (pane.isSinglePlayerPressed()) {
-			gsm.push(new DifficultyMenuState(gsm));
+			gsm.push(new DifficultyMenuState(gsm, SINGLE_PLAYER));
 		}
 
-		if (pane.isTwoPlayersPressed()) {
-			gsm.push(new DifficultyMenuState(gsm));
+		if (pane.isDoublePlayerPressed()) {
+			gsm.push(new DifficultyMenuState(gsm, DOUBLE_PLAYER));
 		}
 	}
 }

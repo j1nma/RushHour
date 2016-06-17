@@ -20,9 +20,9 @@ public class Board implements ModelConstants, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	private int size;
 	private int exit;
-
 	private Set<Block> blocks;
 	private Map<Point, Block> map;
 	private Player redCar;
@@ -88,9 +88,9 @@ public class Board implements ModelConstants, Serializable {
 		map.put(new Point(x, y), block);
 	}
 
-	public void moveBlock(Block block, int direction) {
+	public boolean moveBlock(Block block, int direction) {
 		if (direction != FORWARD && direction != BACKWARD) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Illegal direction.");
 		}
 
 		Point position = nextPosition(block, direction);
@@ -98,7 +98,9 @@ public class Board implements ModelConstants, Serializable {
 			eraseBlock(block);
 			block.setPosition(position);
 			placeBlock(block, position);
+			return true;
 		}
+		return false;
 	}
 
 	private Point nextPosition(Block block, int direction) {
@@ -183,7 +185,7 @@ public class Board implements ModelConstants, Serializable {
 	 *            the orientation of the block
 	 */
 
-	public void addBlock(final Point position, int length, int orientation) {
+	public Block addBlock(final Point position, int length, int orientation) {
 		if (length > size || length < 1) {
 			throw new IllegalArgumentException("Length must belong to [1,size]");
 		}
@@ -208,9 +210,7 @@ public class Board implements ModelConstants, Serializable {
 		Block block = new Block(position, length, orientation);
 		blocks.add(block);
 		placeBlock(block, position);
-
-		// TODO: Agregar getters de estado si son necesarios.
-
+		return block;
 	}
 
 	/**
@@ -224,7 +224,7 @@ public class Board implements ModelConstants, Serializable {
 	 *            the length of the block
 	 * @see #addBlock
 	 */
-	public void addPlayer(final int x, int length) {
+	public Player addPlayer(final int x, int length) {
 		if (redCar != null) {
 			throw new IllegalArgumentException("Player already exists.");
 		}
@@ -250,6 +250,8 @@ public class Board implements ModelConstants, Serializable {
 		blocks.add(player);
 		placeBlock(player, playerPosition);
 		redCar = player;
+		
+		return player;
 	}
 
 	public Player getRedCar() {
@@ -267,5 +269,4 @@ public class Board implements ModelConstants, Serializable {
 	public int getExit() {
 		return exit;
 	}
-
 }
