@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import java.util.Map;
 
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -54,21 +55,16 @@ public class BoardView extends ObjectView<Board> {
 	}
 
 	public void setBlockViews() {
-
-		for (Block block : object.getBlocksSet()) {
-			setBlockView(block);
-		}
-	}
-
-	public void setBlockView(Block block) {
 		BlockView blockview;
 
-		if (block == object.getRedCar()) {
-			blockview = new RedCarView((Player) block);
-		} else {
-			blockview = new BlockView(block);
+		for (Block block : object.getBlocksSet()) {
+			if (block == object.getRedCar()) {
+				blockview = new RedCarView((Player) block);
+			} else {
+				blockview = new BlockView(block);
+			}
+			blockviews.put(block, blockview);
 		}
-		blockviews.put(block, blockview);
 	}
 
 	public BoardPane getGrid() {

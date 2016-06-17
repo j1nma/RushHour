@@ -1,7 +1,8 @@
 package view;
 
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
+
+
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -14,11 +15,11 @@ public class ScreenManager implements ViewConstants {
 
 	public ScreenManager(Stage primaryStage, String name) {
 		root = new StackPane();
+		root.setMinSize(0, 0);
 		scene = new Scene(root);
 		stage = primaryStage;
 		stage.setTitle(name);
-		stage.setResizable(true);
-		stage.getIcons().add(new Image("res/images/GameIcon.png"));
+		stage.setResizable(false);
 		stage.setScene(scene);
 
 		root.setVisible(true);
