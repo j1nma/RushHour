@@ -12,37 +12,40 @@ import model.Board;
 import model.ModelConstants;
 import view.panes.GamePane;
 
-public class DoubleGameState extends DoubleState implements ModelConstants, ControllerConstants {
-	private Board board;
-	private Board opponentBoard;
-	private static final Random generator = new Random();
+public class DoubleGameState extends GameState implements ModelConstants, ControllerConstants {
+	private Board p1Board;
+	private Board p2Board;
+	private GamePane p2Pane;
+	private GamePane p1Pane;
 
 	public DoubleGameState(GameStateManager gsm, LevelDifficulty difficulty) {
-		super(gsm);
-
-		String filePath = "games/" + difficulty.toString().toLowerCase() + "/" + difficulty.toString().toLowerCase()
-				+ generator.nextInt(PRELOADED_GAMES_CANT) + ".ser";
-
-		Loader boardLoader = new Loader();
-		this.board = boardLoader.loadBoard(filePath);
-		this.opponentBoard = boardLoader.loadBoard(filePath);
-
-		this.pane = new GamePane(board);
-		this.opponentPane = new GamePane(this.opponentBoard);
-
-		this.handler = new DoubleGameHandler(gsm, this, board, opponentBoard);
+		this(gsm,"games/" + difficulty.toString().toLowerCase() + "/" + difficulty.toString().toLowerCase()
+				+ generator.nextInt(PRELOADED_GAMES_CANT) + ".ser");
 	}
 
-	public DoubleGameState(GameStateManager gsm, Board board, Board opponentBoard, Pane pane, GamePane opponentPane) {
-		super(gsm);
+	public DoubleGameState(GameStateManager gsm, String filePath) {
+		super(gsm,filePath);
 
-		this.board = board;
-		this.opponentBoard = opponentBoard;
+		Loader boardLoader = new Loader();
+		this.p1Board = boardLoader.loadBoard(filePath);
+		this.p2Board = boardLoader.loadBoard(filePath);
+		this.board = p1Board;
 
-		this.pane = pane;
-		this.opponentPane = opponentPane;
+		this.p1Pane = new GamePane(p1Board);
+		this.p2Pane = new GamePane(p2Board);
+		this.pane = p1Pane;
 
-		this.handler = new DoubleGameHandler(gsm, this, this.board, this.opponentBoard);
+		this.handler = new DoubleGameHandler(gsm, this);
 
+	}
+
+	public void switchPlayer(){
+		if(board == p1Board){
+			board = p2Board;
+			pane = p2Pane;
+		}else{
+			board = p1Board;
+			pane = p1Pane;
+		}
 	}
 }

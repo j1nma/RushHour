@@ -12,8 +12,8 @@ import model.ModelConstants;
 import view.panes.GamePane;
 
 public class GameState extends State implements ModelConstants, ControllerConstants {
-	private Board board;
-	private static final Random generator = new Random();
+	protected Board board;
+	protected static final Random generator = new Random();
 
 	/**
 	 * Constructor for loading an existing game.
@@ -23,7 +23,7 @@ public class GameState extends State implements ModelConstants, ControllerConsta
 
 		board = new Loader().loadBoard(filePath);
 		pane = new GamePane(board);
-		handler = new GameHandler(gsm, this, board);
+		handler = new GameHandler(gsm, this);
 	}
 
 	/**
@@ -34,5 +34,9 @@ public class GameState extends State implements ModelConstants, ControllerConsta
 
 		this(gsm, "games/" + difficulty.toString().toLowerCase() + "/" + difficulty.toString().toLowerCase()
 				+ generator.nextInt(PRELOADED_GAMES_CANT) + ".ser");
+	}
+
+	public Board getBoard(){
+		return board;
 	}
 }

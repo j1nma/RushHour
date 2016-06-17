@@ -40,4 +40,8 @@ public class GameStateManager extends StackPane {
 		states.pop();
 		states.push(state);
 	}
+
+	public void updatePane() {
+		screenManager.setPane(states.peek().getPane());
+	}
 }

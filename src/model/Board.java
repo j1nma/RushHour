@@ -88,7 +88,7 @@ public class Board implements ModelConstants, Serializable {
 		map.put(new Point(x, y), block);
 	}
 
-	public boolean moveBlock(Block block, int direction) {
+	public void moveBlock(Block block, int direction) {
 		if (direction != FORWARD && direction != BACKWARD) {
 			throw new IllegalArgumentException("Illegal direction.");
 		}
@@ -98,14 +98,12 @@ public class Board implements ModelConstants, Serializable {
 			eraseBlock(block);
 			block.setPosition(position);
 			placeBlock(block, position);
-			return true;
 		}
-		return false;
 	}
 
 	private Point nextPosition(Block block, int direction) {
-		Point next = new Point();
 		Point current = block.getPosition();
+		Point next = new Point(current);
 		int x = current.x;
 		int y = current.y;
 		int length = block.getLength();
@@ -114,28 +112,18 @@ public class Board implements ModelConstants, Serializable {
 			if (block.getOrientation() == VERTICAL) {
 				if (y + length < size && !isOccupied(x, y + length)) {
 					next.setLocation(x, y + 1);
-				} else {
-					next = current;
 				}
-			} else {
-				if (x + length < size && !isOccupied(x + length, y)) {
-					next.setLocation(x + 1, y);
-				} else {
-					next = current;
-				}
+			} else if (x + length < size && !isOccupied(x + length, y)) {
+				next.setLocation(x + 1, y);
 			}
 		} else {
 			if (block.getOrientation() == VERTICAL) {
 				if (y - 1 >= 0 && !isOccupied(x, y - 1)) {
 					next.setLocation(x, y - 1);
-				} else {
-					next = current;
 				}
 			} else {
 				if (x - 1 >= 0 && !isOccupied(x - 1, y)) {
 					next.setLocation(x - 1, y);
-				} else {
-					next = current;
 				}
 			}
 		}
