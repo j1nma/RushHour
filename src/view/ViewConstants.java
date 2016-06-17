@@ -47,13 +47,14 @@ public interface ViewConstants {
 	String PLAYER_REAR_IMAGE_PATH = "res/images/PlayerRear.png";
 
 	int IMAGE_ROTATION = 90;
+	int FONT_SIZE_INSTRUCTIONS = 24;
 	
-	public static final String INSTRUCTIONS = "\n\nThe game consists of one red car and other\n" +
-			"of cars. Your quest is to take the red\n" + "car to the exit and set him free."+
-			"\n\nThe cars have an orientation which is in\n" +
-			"the direction of its widest part. The cars can\n" +
-			"move forward and backward, and each time\n" +
-			"you press and release it counts as a move.\n" + "The difficulty of the game is up to you.\n" +
-			"The greater the number of cars, the harder\n" + "it gets.";
-
+	int CANVAS_WIDTH = 500;
+	int CANVAS_HEIGHT = 400;
+	String INSTRUCTIONS = "\n\nThe game consists of one red car and other\n"
+			+ "of cars. Your quest is to take the red\n" + "car to the exit and set him free."
+			+ "\n\nThe cars have an orientation which is in\n" + "the direction of its widest part. The cars can\n"
+			+ "move forward and backward, and each time\n" + "you press and release it counts as a move.\n"
+			+ "The difficulty of the game is up to you.\n" + "The greater the number of cars, the harder\n"
+			+ "it gets.";
 }

@@ -95,4 +95,15 @@ public class BoardView extends ObjectView<Board> {
 		background.add(exitText);
 	}
 
+	public void setBlockView(Block block) {
+		BlockView blockview;
+		
+		 if (block == object.getRedCar()) {
+			 blockview = new RedCarView((Player) block);
+		 } else {
+			 blockview = new BlockView(block);
+		 }
+		 
+		 blockviews.put(block, blockview);
+	}
 }
