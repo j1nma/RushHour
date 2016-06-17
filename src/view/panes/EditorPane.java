@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.util.Optional;
 
 import javafx.geometry.Pos;
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -71,39 +72,33 @@ public class EditorPane extends BorderPane implements ModelConstants, ViewConsta
 		hBottomBox = new HBox();
 
 		backButton.setFont(Font.font(FONT_SIZE_EDITOR));
-		backButton.setPadding(BUTTON_PADDING);
-
 		submitButton.setFont(Font.font(FONT_SIZE_EDITOR));
-		submitButton.setPadding(BUTTON_PADDING);
-
 		addBlockButton.setFont(Font.font(FONT_SIZE_EDITOR));
-		addBlockButton.setPadding(BUTTON_PADDING);
-
 		saveButton.setFont(Font.font(FONT_SIZE_EDITOR));
-		saveButton.setPadding(BUTTON_PADDING);
 
 		horizontalToggle.setFont(Font.font(FONT_SIZE_EDITOR));
-		horizontalToggle.setPadding(BUTTON_PADDING);
 		horizontalToggle.setToggleGroup(orientationGroup);
 		horizontalToggle.setUserData("HORIZONTAL");
 
 		verticalToggle.setFont(Font.font(FONT_SIZE_EDITOR));
-		verticalToggle.setPadding(BUTTON_PADDING);
 		verticalToggle.setToggleGroup(orientationGroup);
 		verticalToggle.setUserData("VERTICAL");
 
-		hTopBox.setPadding(TOPBOX_PADDING);
 		hTopBox.setSpacing(NODE_SEPARATION);
 		hTopBox.setAlignment(Pos.CENTER);
+		hTopBox.setMinHeight(EDITOR_BOX_HEIGHT);
+		hTopBox.setMinWidth(EDITOR_TOP_BOX_WIDTH);
+		BorderPane.setMargin(hTopBox, new Insets(BORDER_MARGIN, 0, 0, 0));
 		hTopBox.getChildren().addAll(backButton, boardSizeInput, boardExitInput, submitButton, saveButton);
 
-		hBottomBox.setPadding(BOTTOMBOX_PADDING);
 		hBottomBox.setSpacing(NODE_SEPARATION);
+		hBottomBox.setMinHeight(EDITOR_BOX_HEIGHT);
+		hBottomBox.setMinWidth(EDITOR_BOTTOM_BOX_SHORT_WIDTH);
+		BorderPane.setMargin(hBottomBox, new Insets(0, 0, BORDER_MARGIN, 0));
 		hBottomBox.setAlignment(Pos.CENTER);
 
 		this.setTop(hTopBox);
 		this.setBottom(hBottomBox);
-
 	}
 
 	private boolean inputIsSet() {
@@ -139,15 +134,15 @@ public class EditorPane extends BorderPane implements ModelConstants, ViewConsta
 		if (boardWasBuilt) {
 			boardView = new BoardView(board);
 			grid = boardView.getGrid();
-			grid.setAlignment(Pos.CENTER);// ojoooo
-			grid.setMaxWidth(500);
+			grid.setAlignment(Pos.CENTER);
 			this.setCenter(grid);
+			BorderPane.setMargin(grid, new Insets(BORDER_MARGIN, DOUBLE_BORDER_MARGIN, BORDER_MARGIN, DOUBLE_BORDER_MARGIN));
+			this.setHeightWidth();
 			playerWasBuilt = false;
 			blockXInput.clear();
 			blockLengthInput.clear();
 			hBottomBox.getChildren().clear();
 			hBottomBox.getChildren().addAll(new Label("Insert player:"), blockXInput, blockLengthInput, addBlockButton);
-
 		}
 	}
 
@@ -175,6 +170,22 @@ public class EditorPane extends BorderPane implements ModelConstants, ViewConsta
 			return true;
 		}
 		return false;
+	}
+	
+	private void setHeightWidth() {
+		this.setHeight(grid.getHeight() + hTopBox.getMinHeight() + hBottomBox.getMinHeight() + 4 * BORDER_MARGIN);
+		if(grid.getWidth() + 2 * DOUBLE_BORDER_MARGIN > hTopBox.getMinWidth()) {
+			if(grid.getWidth() + 2 * DOUBLE_BORDER_MARGIN > hBottomBox.getMinWidth())
+				this.setWidth(grid.getHeight() + 2 * DOUBLE_BORDER_MARGIN);
+			else 
+				this.setWidth(hBottomBox.getMinWidth());
+		}
+		else {
+			if(hTopBox.getMinWidth() > hBottomBox.getMinWidth())
+				this.setWidth(hTopBox.getMinWidth());
+			else
+				this.setWidth(hBottomBox.getMinWidth());
+		}
 	}
 
 	private boolean playerIsSet() {
@@ -230,6 +241,7 @@ public class EditorPane extends BorderPane implements ModelConstants, ViewConsta
 				hBottomBox.getChildren().clear();
 				hBottomBox.getChildren().addAll(blockXInput, blockYInput, blockLengthInput, horizontalToggle,
 						verticalToggle, addBlockButton);
+				hBottomBox.setMinWidth(EDITOR_BOTTOM_BOX_LARGE_WIDTH);
 			} catch (IllegalArgumentException e) {
 				createAlert(AlertType.INFORMATION, "Invalid red car.");
 			}
