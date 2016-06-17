@@ -40,10 +40,7 @@ public class GamePane extends BorderPane implements ViewConstants {
         this.setStyle(GAMEPANE_STYLE);
         
         this.setHeight(grid.getHeight() + hTopBox.getMinHeight() + BORDER_MARGIN * 4);
-        if(grid.getWidth() + DOUBLE_BORDER_MARGIN * 2 > GAME_BUTTON_WIDTH)
-        	this.setWidth(grid.getWidth() + DOUBLE_BORDER_MARGIN * 2); 
-        else
-        	this.setWidth(GAME_BUTTON_WIDTH);
+        this.setWidth(grid.getWidth() + DOUBLE_BORDER_MARGIN * 2); 
 
 		input = new HashSet<String>();
 		this.setOnKeyPressed(new EventHandler<KeyEvent>() {
