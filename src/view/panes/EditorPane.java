@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.Optional;
 
-import javafx.geometry.Pos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -26,12 +26,15 @@ import view.BoardView;
 import view.EditorInput;
 import view.ViewConstants;
 
+/**
+ * EditorPane is a BorderPane
+ *
+ */
 public class EditorPane extends BorderPane implements ModelConstants, ViewConstants {
 	private int boardSize;
 	private int boardExit;
 	private int length;
 	private int blockOrientation;
-	private boolean boardWasBuilt;
 	private boolean playerWasBuilt;
 
 	private Point position;
@@ -72,8 +75,11 @@ public class EditorPane extends BorderPane implements ModelConstants, ViewConsta
 		hBottomBox = new HBox();
 
 		backButton.setFont(Font.font(FONT_SIZE_EDITOR));
+
 		submitButton.setFont(Font.font(FONT_SIZE_EDITOR));
+
 		addBlockButton.setFont(Font.font(FONT_SIZE_EDITOR));
+
 		saveButton.setFont(Font.font(FONT_SIZE_EDITOR));
 
 		horizontalToggle.setFont(Font.font(FONT_SIZE_EDITOR));
@@ -89,16 +95,19 @@ public class EditorPane extends BorderPane implements ModelConstants, ViewConsta
 		hTopBox.setMinHeight(EDITOR_BOX_HEIGHT);
 		hTopBox.setMinWidth(EDITOR_TOP_BOX_WIDTH);
 		BorderPane.setMargin(hTopBox, new Insets(BORDER_MARGIN, 0, 0, 0));
+
 		hTopBox.getChildren().addAll(backButton, boardSizeInput, boardExitInput, submitButton, saveButton);
 
 		hBottomBox.setSpacing(NODE_SEPARATION);
 		hBottomBox.setMinHeight(EDITOR_BOX_HEIGHT);
 		hBottomBox.setMinWidth(EDITOR_BOTTOM_BOX_SHORT_WIDTH);
 		BorderPane.setMargin(hBottomBox, new Insets(0, 0, BORDER_MARGIN, 0));
+
 		hBottomBox.setAlignment(Pos.CENTER);
 
 		this.setTop(hTopBox);
 		this.setBottom(hBottomBox);
+
 	}
 
 	private boolean inputIsSet() {
@@ -125,25 +134,23 @@ public class EditorPane extends BorderPane implements ModelConstants, ViewConsta
 		if (inputIsSet()) {
 			try {
 				board = new Board(boardSize, boardExit);
-				boardWasBuilt = true;
+				boardView = new BoardView(board);
+				grid = boardView.getGrid();
+				grid.setAlignment(Pos.CENTER);
+				this.setCenter(grid);
+				BorderPane.setMargin(grid,
+						new Insets(BORDER_MARGIN, DOUBLE_BORDER_MARGIN, BORDER_MARGIN, DOUBLE_BORDER_MARGIN));
+				playerWasBuilt = false;
+				blockXInput.clear();
+				blockLengthInput.clear();
+				hBottomBox.getChildren().clear();
+				hBottomBox.getChildren().addAll(new Label("Insert player:"), blockXInput, blockLengthInput,
+						addBlockButton);
+				hBottomBox.setMinWidth(EDITOR_BOTTOM_BOX_SHORT_WIDTH);
+				this.setHeightWidth();
 			} catch (IllegalArgumentException e) {
 				createAlert(AlertType.ERROR, "Invalid size and/or exit.", e.getMessage());
 			}
-		}
-
-		if (boardWasBuilt) {
-			boardView = new BoardView(board);
-			grid = boardView.getGrid();
-			grid.setAlignment(Pos.CENTER);
-			this.setCenter(grid);
-			BorderPane.setMargin(grid, new Insets(BORDER_MARGIN, DOUBLE_BORDER_MARGIN, BORDER_MARGIN, DOUBLE_BORDER_MARGIN));
-			playerWasBuilt = false;
-			blockXInput.clear();
-			blockLengthInput.clear();
-			hBottomBox.getChildren().clear();
-			hBottomBox.getChildren().addAll(new Label("Insert player:"), blockXInput, blockLengthInput, addBlockButton);
-			hBottomBox.setMinWidth(EDITOR_BOTTOM_BOX_SHORT_WIDTH);
-			this.setHeightWidth();
 		}
 	}
 
@@ -171,22 +178,6 @@ public class EditorPane extends BorderPane implements ModelConstants, ViewConsta
 			return true;
 		}
 		return false;
-	}
-	
-	private void setHeightWidth() {
-		this.setHeight(grid.getHeight() + hTopBox.getMinHeight() + hBottomBox.getMinHeight() + 4 * BORDER_MARGIN);
-		if(grid.getWidth() + 2 * DOUBLE_BORDER_MARGIN > hTopBox.getMinWidth()) {
-			if(grid.getWidth() + 2 * DOUBLE_BORDER_MARGIN > hBottomBox.getMinWidth())
-				this.setWidth(grid.getHeight() + 2 * DOUBLE_BORDER_MARGIN);
-			else 
-				this.setWidth(hBottomBox.getMinWidth());
-		}
-		else {
-			if(hTopBox.getMinWidth() > hBottomBox.getMinWidth())
-				this.setWidth(hTopBox.getMinWidth());
-			else
-				this.setWidth(hBottomBox.getMinWidth());
-		}
 	}
 
 	private boolean playerIsSet() {
@@ -230,8 +221,8 @@ public class EditorPane extends BorderPane implements ModelConstants, ViewConsta
 
 		if (playerIsSet()) {
 			try {
-				playerWasBuilt = true;
 				boardView.setBlockView(board.addPlayer(position.x, length));
+				playerWasBuilt = true;
 				boardView.refresh();
 				grid = boardView.getGrid();
 				blockXInput.clear();
@@ -244,7 +235,7 @@ public class EditorPane extends BorderPane implements ModelConstants, ViewConsta
 						verticalToggle, addBlockButton);
 				hBottomBox.setMinWidth(EDITOR_BOTTOM_BOX_LARGE_WIDTH);
 			} catch (IllegalArgumentException e) {
-				createAlert(AlertType.INFORMATION, "Invalid red car.");
+				createAlert(AlertType.INFORMATION, "Invalid red car.", e.getMessage());
 			}
 		}
 	}
@@ -298,6 +289,23 @@ public class EditorPane extends BorderPane implements ModelConstants, ViewConsta
 
 	public boolean isSavePressed() {
 		return saveButton.isPressed();
+	}
+
+	private void setHeightWidth() {
+		this.setHeight(grid.getHeight() + hTopBox.getMinHeight() + hBottomBox.getMinHeight() + 4 * BORDER_MARGIN);
+		if (grid.getWidth() + 2 * DOUBLE_BORDER_MARGIN > hTopBox.getMinWidth()) {
+			if (grid.getWidth() + 2 * DOUBLE_BORDER_MARGIN > hBottomBox.getMinWidth()) {
+				this.setWidth(grid.getHeight() + 2 * DOUBLE_BORDER_MARGIN);
+			} else {
+				this.setWidth(hBottomBox.getMinWidth());
+			}
+		} else {
+			if (hTopBox.getMinWidth() > hBottomBox.getMinWidth()) {
+				this.setWidth(hTopBox.getMinWidth());
+			} else {
+				this.setWidth(hBottomBox.getMinWidth());
+			}
+		}
 	}
 
 }

@@ -2,7 +2,7 @@ package view.panes;
 
 import view.MenuButton;
 
-public class PlayMenuPane extends GameMenu {
+public class PlayMenuPane extends GameMenuPane {
 	private MenuButton btnBack;
 	private MenuButton btnSinglePlayer;
 	private MenuButton btnDoublePlayer;

@@ -5,6 +5,9 @@ import controller.GameStateManager;
 import controller.states.State;
 import view.panes.InstructionsMenuPane;
 
+/**
+ * Handles InstructionsMenuPane from InstructionsMenuState.
+ */
 public class InstructionsMenuHandler extends Handler<InstructionsMenuPane> {
 
 	public InstructionsMenuHandler(GameStateManager gsm, State state) {

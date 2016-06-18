@@ -7,6 +7,10 @@ import java.io.ObjectInputStream;
 
 import model.Board;
 
+/**
+ * Loader is in charge of loading a board from a file.
+ *
+ */
 public class Loader {
 
 	public Board loadBoard(String filePath) {
@@ -21,6 +25,7 @@ public class Loader {
 		} catch (ClassNotFoundException c) {
 			c.printStackTrace();
 		}
+
 		return board;
 	}
 }

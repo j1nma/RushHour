@@ -1,12 +1,18 @@
 package controller.handlers;
 
 import controller.GameStateManager;
-import controller.LevelDifficulty;
+
 import controller.states.DoubleGameState;
 import controller.states.GameState;
 import controller.states.State;
 import view.panes.DifficultyMenuPane;
 
+/**
+ * Handles DifficultyMenuPane from DifficultyMenuState. Its mode variable will
+ * be initialized in its constructor with SINGLE_PLAYER or DOUBLE_PLAYER
+ * accordingly.
+ *
+ */
 public class DifficultyMenuHandler extends Handler<DifficultyMenuPane> {
 	private int mode;
 

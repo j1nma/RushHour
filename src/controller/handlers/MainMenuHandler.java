@@ -13,6 +13,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import view.panes.MainMenuPane;
 
+/**
+ * Handles MainMenuPane from MainMenuState.
+ */
 public class MainMenuHandler extends Handler<MainMenuPane> {
 	private Stage primaryStage;
 

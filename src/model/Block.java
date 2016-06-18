@@ -3,6 +3,15 @@ package model;
 import java.awt.Point;
 import java.io.Serializable;
 
+/**
+ * Block represents a physical vehicle of the board. It has an orientation
+ * (horizontal or vertical), a length (positive) and a position. Starting from
+ * this position, the block will also occupy in the board as many positions as
+ * length-1 with its orientation. For example, if a block has position (0,0),
+ * length 3 and orientation horizontal the board will put in its map positions
+ * (0,0), (1,0) and (2,0) pointing to the block.
+ * 
+ */
 public class Block implements ModelConstants, Serializable {
 	/**
 	 * 
@@ -44,3 +53,4 @@ public class Block implements ModelConstants, Serializable {
 		return length;
 	}
 }
+

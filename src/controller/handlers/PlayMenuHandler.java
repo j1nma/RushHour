@@ -6,6 +6,9 @@ import controller.states.DifficultyMenuState;
 import controller.states.State;
 import view.panes.PlayMenuPane;
 
+/**
+ * Handles PlayMenuPane from PlayMenuState.
+ */
 public class PlayMenuHandler extends Handler<PlayMenuPane> implements ControllerConstants {
 
 	public PlayMenuHandler(GameStateManager gsm, State state) {

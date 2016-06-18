@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import java.util.Map;
 
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -16,6 +15,10 @@ import model.Board;
 import model.Player;
 import view.panes.BoardPane;
 
+/**
+ * Graphical representation of Board class.
+ *
+ */
 public class BoardView extends ObjectView<Board> {
 	private BoardPane grid;
 	private Map<Block, BlockView> blockviews;
@@ -31,6 +34,10 @@ public class BoardView extends ObjectView<Board> {
 		addBackground(board.getExit());
 	}
 
+	/**
+	 * Iterates over the set of blocks from board, gets its block views from the
+	 * map and adds them to the grid regarding the block's orientation.
+	 */
 	public void refresh() {
 		BlockView blockview;
 
@@ -55,16 +62,28 @@ public class BoardView extends ObjectView<Board> {
 	}
 
 	public void setBlockViews() {
-		BlockView blockview;
 
 		for (Block block : object.getBlocksSet()) {
-			if (block == object.getRedCar()) {
-				blockview = new RedCarView((Player) block);
-			} else {
-				blockview = new BlockView(block);
-			}
-			blockviews.put(block, blockview);
+			setBlockView(block);
 		}
+	}
+
+	/**
+	 * Creates a view for the blocks and puts it to the map of Block to
+	 * BlockView (blockviews).
+	 * 
+	 * @param block
+	 *            the block to be given a view
+	 */
+	public void setBlockView(Block block) {
+		BlockView blockview;
+
+		if (block == object.getRedCar()) {
+			blockview = new PlayerView((Player) block);
+		} else {
+			blockview = new BlockView(block);
+		}
+		blockviews.put(block, blockview);
 	}
 
 	public BoardPane getGrid() {
@@ -95,15 +114,4 @@ public class BoardView extends ObjectView<Board> {
 		background.add(exitText);
 	}
 
-	public void setBlockView(Block block) {
-		BlockView blockview;
-		
-		 if (block == object.getRedCar()) {
-			 blockview = new RedCarView((Player) block);
-		 } else {
-			 blockview = new BlockView(block);
-		 }
-		 
-		 blockviews.put(block, blockview);
-	}
 }

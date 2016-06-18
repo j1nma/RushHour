@@ -10,10 +10,15 @@ import javafx.scene.layout.VBox;
 import javafx.scene.Node;
 import view.ViewConstants;
 
-public abstract class GameMenu extends StackPane implements ViewConstants {
+/**
+ * GameMenuPane is a StackPane with a background image on the back and a
+ * VBox list of Nodes (MenuButtons and/or Canvas) on the front.
+ *
+ */
+public abstract class GameMenuPane extends StackPane implements ViewConstants {
 	protected VBox list;
 
-	public GameMenu(Node... children) {
+	public GameMenuPane(Node... children) {
 		list = new VBox(NODE_SEPARATION, children);
 		list.setAlignment(Pos.CENTER);
 		list.setPrefWidth(BACKGROUND_SIZE);

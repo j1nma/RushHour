@@ -2,15 +2,13 @@ import controller.GameStateManager;
 
 import controller.states.MainMenuState;
 import javafx.application.Application;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import view.ScreenManager;
 
 /**
- * Game sets the primary stage: loads the background image and creates a menu
- * manager.
+ * Game sets the primary stage: loads the background image, creates a game
+ * state manager and a screen manager. MainMenuState is pushed as the first state.
  * 
- *
  */
 public class Game extends Application {
 	private GameStateManager gsm;
@@ -19,9 +17,9 @@ public class Game extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-		screenManager = new ScreenManager(primaryStage,"RushHour");
+		screenManager = new ScreenManager(primaryStage, "RushHour");
 		gsm = new GameStateManager(screenManager);
-		gsm.push(new MainMenuState(gsm,primaryStage));
+		gsm.push(new MainMenuState(gsm, primaryStage));
 		primaryStage.show();
 	}
 

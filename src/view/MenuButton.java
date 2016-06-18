@@ -6,6 +6,10 @@ import javafx.scene.text.Font;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
+/**
+ * Especially styled button for game menus.
+ *
+ */
 public class MenuButton extends Button implements ViewConstants {
 
 	public MenuButton(String text, Paint color) {

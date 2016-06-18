@@ -6,6 +6,11 @@ import controller.states.State;
 import javafx.animation.AnimationTimer;
 import javafx.scene.layout.Pane;
 
+/**
+ * Handler extends AnimationTimer thus creating a timer and overriding handle
+ * method, which will span through all of the conditions inside it for every
+ * timer iteration.
+ */
 public abstract class Handler<T extends Pane> extends AnimationTimer implements ControllerConstants {
 
 	protected GameStateManager gsm;

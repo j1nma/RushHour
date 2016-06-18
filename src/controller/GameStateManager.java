@@ -7,6 +7,12 @@ import view.ScreenManager;
 
 import java.util.Stack;
 
+/**
+ * GameStateManager has a stack of states and a screenManager. It updates the
+ * screen by commanding the screenManager to set the current state's pane (when
+ * entering or leaving a state).
+ *
+ */
 public class GameStateManager extends StackPane {
 
 	private Stack<State> states;

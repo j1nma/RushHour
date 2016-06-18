@@ -3,7 +3,6 @@ package controller.states;
 import java.util.Random;
 
 import controller.ControllerConstants;
-import controller.LevelDifficulty;
 import controller.GameStateManager;
 import controller.Loader;
 import controller.handlers.GameHandler;
@@ -33,7 +32,7 @@ public class GameState extends State implements ModelConstants, ControllerConsta
 	public GameState(GameStateManager gsm, LevelDifficulty difficulty) {
 
 		this(gsm, "games/" + difficulty.toString().toLowerCase() + "/" + difficulty.toString().toLowerCase()
-				+ generator.nextInt(PRELOADED_GAMES_CANT) + ".ser");
+				+ generator.nextInt(PRELOADED_GAMES_AMOUNT) + ".ser");
 	}
 
 	public Board getBoard(){

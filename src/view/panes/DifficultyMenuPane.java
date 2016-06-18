@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 
 import view.MenuButton;
 
-public class DifficultyMenuPane extends GameMenu {
+public class DifficultyMenuPane extends GameMenuPane {
 	private MenuButton btnBack;
 	private MenuButton btnEasy;
 	private MenuButton btnMedium;

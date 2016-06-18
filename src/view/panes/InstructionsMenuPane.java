@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.text.Font;
 
-public class InstructionsMenuPane extends GameMenu {
+public class InstructionsMenuPane extends GameMenuPane {
 	private MenuButton btnBack;
 	private Canvas canvas;
 	private GraphicsContext gc;
