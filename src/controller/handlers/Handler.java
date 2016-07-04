@@ -17,6 +17,7 @@ public abstract class Handler<T extends Pane> extends AnimationTimer implements 
 	protected State state;
 	protected T pane;
 
+	@SuppressWarnings("unchecked")
 	public Handler(GameStateManager gsm, State state) {
 		this.gsm = gsm;
 		this.state = state;

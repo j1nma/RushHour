@@ -1,15 +1,16 @@
 package view;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 
 import java.util.Map;
 
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import model.Block;
 import model.Board;
 import model.Player;
@@ -78,7 +79,7 @@ public class BoardView extends ObjectView<Board> {
 	public void setBlockView(Block block) {
 		BlockView blockview;
 
-		if (block == object.getRedCar()) {
+		if (block.equals(object.getRedCar())) {
 			blockview = new PlayerView((Player) block);
 		} else {
 			blockview = new BlockView(block);
@@ -97,12 +98,12 @@ public class BoardView extends ObjectView<Board> {
 
 		for (int x = 0; x < size; x++) {
 			for (int y = 0; y < size; y++) {
-				Rectangle rectangle = new Rectangle(BLOCKVIEW_WIDTH, BLOCKVIEW_HEIGHT);
-				rectangle.setStroke(Color.BLACK);
-				rectangle.setFill(Color.GREY);
-				rectangle.setStrokeWidth(1.0);
-				grid.add(rectangle, x, y);
-				background.add(rectangle);
+				ImageView backBox = new ImageView(new Image("res/images/backBox.png"));
+				backBox.setFitWidth(BLOCKVIEW_WIDTH);
+				backBox.setFitHeight(BLOCKVIEW_HEIGHT);
+
+				grid.add(backBox, x, y);
+				background.add(backBox);
 			}
 		}
 

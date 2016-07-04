@@ -109,7 +109,7 @@ public class GameHandler extends Handler<GamePane> implements ModelConstants {
 	}
 
 	protected boolean hasMoved() {
-		if (!selectedBlock.getPosition().equals(blockLastPosition)) {
+		if (selectedBlock != null && !selectedBlock.getPosition().equals(blockLastPosition)) {
 			return true;
 		}
 		return false;

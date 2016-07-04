@@ -40,8 +40,8 @@ public class DoubleGameState extends GameState implements ModelConstants, Contro
 		this.p2Board = boardLoader.loadBoard(filePath);
 		this.board = p1Board;
 
-		this.p1Pane = new GamePane(p1Board, "Player 1");
-		this.p2Pane = new GamePane(p2Board, "Player 2");
+		this.p1Pane = new GamePane(p1Board, "PLAYER 1");
+		this.p2Pane = new GamePane(p2Board, "PLAYER 2");
 		this.pane = p1Pane;
 
 		this.handler = new DoubleGameHandler(gsm, this);

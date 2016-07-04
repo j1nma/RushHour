@@ -12,7 +12,7 @@ import javafx.scene.layout.Pane;
  */
 public abstract class State {
 	protected GameStateManager gsm;
-	protected Handler handler;
+	protected Handler<?> handler;
 	protected Pane pane;
 
 	public State(GameStateManager gsm) {

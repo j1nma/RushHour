@@ -1,12 +1,12 @@
 package view.panes;
 
 import javafx.geometry.Insets;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import model.Board;
 import view.BoardView;
 import view.ViewConstants;
@@ -50,8 +50,12 @@ public class GamePane extends BorderPane implements ViewConstants {
 	
 	public GamePane(Board board, String player) {
 		this(board);
-		Text playerLabel = new Text(player);
-		playerLabel.setFont(Font.font(FONT_SIZE_GAME+10));
+		Button playerLabel = new Button(player);
+		playerLabel.setFont(Font.font(FONT_SIZE_GAME));
+		playerLabel.setFocusTraversable(false);
+		playerLabel.setDisable(false);
+		playerLabel.setStyle(PLAYER_BUTTON_STYLE);
+
 		hTopBox.getChildren().add(playerLabel);
 	}
 

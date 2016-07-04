@@ -251,14 +251,16 @@ public class EditorPane extends BorderPane implements ModelConstants, ViewConsta
 		Optional<String> result = dialog.showAndWait();
 		if (result.isPresent()) {
 			fileName = "games/" + result.get() + ".ser";
-		}
 
-		try {
-			ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)));
-			out.writeObject(board);
-			out.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+			try {
+				ObjectOutputStream out = new ObjectOutputStream(
+						new BufferedOutputStream(new FileOutputStream(fileName)));
+				out.writeObject(board);
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
 		}
 	}
 

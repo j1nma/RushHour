@@ -36,6 +36,12 @@ public class DoubleGameHandler extends GameHandler {
 		if (!pane.isMousePressedOnGrid() && mouseWasPressed) {
 			mouseWasPressed = false;
 			if (hasMoved()) {
+				try {
+					//Pause for 1.5 seconds
+					Thread.sleep(1500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				checkWinCondition();
 				switchPlayer();
 			}

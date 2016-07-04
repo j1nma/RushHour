@@ -27,8 +27,9 @@ public class ScreenManager implements ViewConstants {
 		stage = primaryStage;
 		stage.setTitle(name);
 		stage.setResizable(false);
-		stage.getIcons().add(new Image("res/images/GameIcon.png"));
+		stage.getIcons().add(new Image("res/images/GameIconsMedium.png"));
 		stage.setScene(scene);
+		stage.show();
 
 		root.setVisible(true);
 	}
@@ -61,5 +62,8 @@ public class ScreenManager implements ViewConstants {
 			pane.heightProperty().removeListener(heightListener);
 			pane.widthProperty().removeListener(widthListener);
 		}
+		
+		//Line repeated because getIcons uses the stage's size at every given moment
+		stage.getIcons().add(new Image("res/images/GameIconsMedium.png"));
 	}
 }

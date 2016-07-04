@@ -11,8 +11,8 @@ import javafx.scene.Node;
 import view.ViewConstants;
 
 /**
- * GameMenuPane is a StackPane with a background image on the back and a
- * VBox list of Nodes (MenuButtons and/or Canvas) on the front.
+ * GameMenuPane is a StackPane with a background image on the back and a VBox
+ * list of Nodes (MenuButtons and/or Canvas) on the front.
  *
  */
 public abstract class GameMenuPane extends StackPane implements ViewConstants {
@@ -20,6 +20,7 @@ public abstract class GameMenuPane extends StackPane implements ViewConstants {
 
 	public GameMenuPane(Node... children) {
 		list = new VBox(NODE_SEPARATION, children);
+
 		list.setAlignment(Pos.CENTER);
 		list.setPrefWidth(BACKGROUND_SIZE);
 		list.setPrefHeight(BACKGROUND_SIZE);
